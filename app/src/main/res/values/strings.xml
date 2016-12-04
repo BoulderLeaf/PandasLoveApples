@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GutterBall</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="options">App Options</string>
+     <string name="unlock_all">Unlock All Levels</string>
+<string name="levelsBtn">Select Level</string>
+<string name="aboutBtn">About</string>
+<string name="level1Btn">Level 1</string>
+<string name="level2Btn">Level 2</string>
+<string name="level3Btn">Level 3</string>
+<string name="level4Btn">Level 4</string>
+<string name="level5Btn">Level 5</string>
+<string name="level6Btn">Level 6</string>
+<string name="level7Btn">Level 7</string>
+<string name="level8Btn">Level 8</string>
+<string name="level9Btn">Level 9</string>
+
+<!-- TOAST -->
+<string name="main_msg">New Levels have been unlocked!</string>
+
+</resources>

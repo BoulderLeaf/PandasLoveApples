@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item name="photo_button_ratio" format="float" type="dimen">1.68421</item>
+</resources>
