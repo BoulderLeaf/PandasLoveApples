@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "604156984934",
+    "project_id": "pandas-love-apples"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604156984934:android:76f1a22ce2f5a9ad",
+        "android_client_info": {
+          "package_name": "com.pandeagames.www.gutterballredux"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEkqzEUZoOoaUWCUUFG4uE8ooufjOEm1U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-88768285-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

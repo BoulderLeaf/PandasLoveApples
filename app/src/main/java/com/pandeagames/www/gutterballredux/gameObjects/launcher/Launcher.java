@@ -35,6 +35,8 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	private int lineSize=20;
 	private int lineDist=10;
 	private long delay=0;
+	private double maxStrength = 20;
+	private double baseStrength = 5;
 
 	private long lastLaunchTime=0;
 	private boolean enabled=true;
@@ -196,7 +198,10 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		double a= Math.atan2(dy,  dx);
 		double d= Math.sqrt(dx*dx+dy*dy);
 		
-		double vd = Math.sqrt(vx*vx+vy*vy);
+		//double vd = Math.sqrt(vx*vx+vy*vy);
+		double vd = Math.sqrt(dx*dx+dy*dy);
+
+		vd = vd > r ? r:vd;
 		
 		double cos = Math.cos(a);
 		double sin = Math.sin(a);
@@ -204,9 +209,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		double dNew = Math.pow(d/100, 3);
 		double dReduced = dNew*200;
 		
-		double baseForce = 5;
-		
-		double power = baseForce+dReduced+vd*20;
+		double power = baseStrength + (vd / r) * maxStrength;
 		
 		Vec2 force = new Vec2(
 				(float)(cos*power), 

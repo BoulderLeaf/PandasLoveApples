@@ -41,6 +41,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.SurfaceHolder;
 
+import com.pandeagames.BuildConfig;
+
 public class Game extends SwingActivity {
 	private Level level;
 	private Simulation simulation;
@@ -121,14 +123,17 @@ protected void onRestart(){
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, new GameView(this));
 		if(level==null){
-			
-			
 		Bundle bundle = getIntent().getExtras();
 		levelIndex=bundle.getInt("level");
 		gameComponentList = new BufferedList<AbstractGameComponent>();
 		bodyList = new BodyList<BodyComponent>();
 		simulation = new Simulation(this, bodyList);
-		debugDraw = new DebugDraw(this, bodyList);
+
+		if(BuildConfig.DEBUG_MODE)
+		{
+			debugDraw = new DebugDraw(this, bodyList);
+		}
+
 		radialCollision=new RadialCollisionController(this);
 		switch(levelIndex)
 		{

@@ -1,5 +1,7 @@
 package com.pandeagames.www.gutterballredux.droidControllers;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.pandeagames.R;
 
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
@@ -22,13 +24,14 @@ import android.widget.Toast;
 
 public class LevelSelectActivity extends SwingActivity implements android.view.View.OnClickListener {
 	private static final String UNLOCKED_STATE="levelsUnlocked"; 
-private int selectedLevel=0;
-private LevelManager levelManager;
-private Button resetLevelsButton;
-private Button unlockLevelsButton;
-private TextView appleCount;
-private LevelLayoutController levelLayoutController;
-public static int savedUnlockCount;
+	private int selectedLevel=0;
+	private LevelManager levelManager;
+	private Button resetLevelsButton;
+	private Button unlockLevelsButton;
+	private TextView appleCount;
+	private LevelLayoutController levelLayoutController;
+	public static int savedUnlockCount;
+	private Tracker mTracker;
 	public LevelSelectActivity() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -36,6 +39,11 @@ public static int savedUnlockCount;
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+
+		// Obtain the shared Tracker instance.
+		GutterBallApp application = (GutterBallApp) getApplication();
+		mTracker = application.getDefaultTracker();
+
 		setContentView(R.layout.level_select);
 		levelManager = ((GutterBallApp)getApplicationContext()).getLevelManager();
 		if(levelLayoutController==null){
@@ -68,6 +76,11 @@ public static int savedUnlockCount;
 	protected void onResume(){
 		super.onResume();
 		levelLayoutController.initialize();
+
+		String name = "GutterBallApp";
+
+		mTracker.setScreenName("Image~" + name);
+		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 	}
 	public void selectLevel(View view)
 	{

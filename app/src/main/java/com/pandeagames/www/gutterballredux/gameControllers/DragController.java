@@ -38,21 +38,12 @@ private float yOffset=0.0f;
 			vy=fingerY-oldY;
 			oldX=fingerX;
 			oldY=fingerY;
-			/*Body body = bodyComp.getBody();
-			
-			float xDiff=fingerX-gameView.toScreenX(body.getWorldCenter().x);
-			float yDiff=fingerY-gameView.toScreenY(body.getWorldCenter().y);
-			Simulation sim=game.getSimulation();
-			Vec2 gravity = sim.getGravity();
-			int spring=20;
-			body.applyForce(new Vec2(xDiff*spring, yDiff*spring),new Vec2(gameView.toWorldX(fingerX), gameView.toWorldY(fingerY)));*/
-Body body = bodyComp.getBody();
+			Body body = bodyComp.getBody();
 			
 			Simulation sim=game.getSimulation();
 			Vec2 gravity = sim.getGravity();
 			
 			body.setTransform(new Vec2(gameView.toWorldX(fingerX-xOffset), gameView.toWorldY(fingerY-yOffset)), 0.0f);
-			//body.applyForce(new Vec2(xDiff*spring, yDiff*spring),new Vec2(gameView.toWorldX(fingerX), gameView.toWorldY(fingerY)));
 		}
 	}
 
