@@ -74,7 +74,6 @@ public void createBody(Body body)
 	@ Override
 	public void update(UpdateInfo updateInfo){
 		super.update(updateInfo);
-		
 	}
 	@ Override
 	public void draw(DrawInfo drawInfo){

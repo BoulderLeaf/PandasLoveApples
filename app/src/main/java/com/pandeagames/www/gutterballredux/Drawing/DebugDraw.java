@@ -54,6 +54,11 @@ public class DebugDraw extends DrawableGameComponent {
 		// TODO Auto-generated constructor stub
 		this.overrideDrawBody=overrideDrawBody;
 	}
+
+	@Override
+	public int drawOrder() {
+		return 500;
+	}
 	
 	@Override
 	public void update(UpdateInfo updateInfo) {

@@ -53,7 +53,7 @@ public Simulation(Game game, BufferedList<BodyComponent> bodyList){
 	timeStep = 1.0f/15.0f;
      velocityIterations = 1;
      positionIterations = 1;
-     worldSize=new Point(30,48);
+     worldSize=new Point(24,40);
      this.bodyList=bodyList;
      game.addInputComponent(this);
      

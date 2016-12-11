@@ -11,7 +11,7 @@ public class GameView extends SurfaceView {
 	private Point scaler;
 	private Point screenSize;
 	private float ratio;
-	private float horizontalOffset;
+	private float horizontalOffset, verticalOffset;
 
 	public GameView(Game game) {
 		super(game);
@@ -25,6 +25,7 @@ public class GameView extends SurfaceView {
 		this.scaler = game.getScaler();
 		ratio = screenSize.y / scaler.y;
 		horizontalOffset = (screenSize.x - scaler.x * ratio) / 2;
+		verticalOffset = (screenSize.y - scaler.y * ratio) / 2;
 	}
 
 	public boolean onTouchEvent(MotionEvent e) {

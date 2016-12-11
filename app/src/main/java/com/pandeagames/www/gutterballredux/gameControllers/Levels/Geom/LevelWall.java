@@ -46,13 +46,13 @@ case BOTTOM:
 	out.set(sim.getWorldSize().x/2,sim.getWorldSize().y-wallThickness/2);
 	break;
 case TOP:
-	out.set(sim.getWorldSize().x/2,wallThickness/2);
+	out.set(sim.getWorldSize().x/2,-wallThickness/2);
 	break;
 case RIGHT:
-	out.set(sim.getWorldSize().x-wallThickness/2, sim.getWorldSize().y/2);
+	out.set(sim.getWorldSize().x+wallThickness/2, sim.getWorldSize().y/2);
 	break;
 case LEFT:
-	out.set(wallThickness/2,  sim.getWorldSize().y/2);
+	out.set(-wallThickness/2,  sim.getWorldSize().y/2);
 }
 return out;
 }

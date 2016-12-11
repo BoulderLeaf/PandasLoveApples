@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.AppleLevelManager;
+import com.pandeagames.www.gutterballredux.gameObjects.Breakable;
 import com.pandeagames.www.gutterballredux.gameObjects.HitSparks;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal.IObtainedCallback;
@@ -23,6 +24,7 @@ protected LauncherTouchCircle launcherCircle;
 protected Launcher launcher;
 protected LauncherAnimation launcherAnim;
 protected List<Portal> portalList;
+	protected List<Breakable> breakableList;
 protected HitSparks sparks;
 protected GutterBallApp app;
 protected int appleCount=0;
@@ -35,9 +37,10 @@ protected int appleCount=0;
 		initialize();
 	}
 	private void initialize(){
-		launcher = new Launcher(game, 15, 46);
+		launcher = new Launcher(game, 12, 38);
 		launcher.setDelay(1000);
 		portalList =new ArrayList<Portal>();
+		breakableList = new ArrayList<Breakable>();
 		sparks = new HitSparks(game);
 		app =(GutterBallApp) game.getApplicationContext();
 		launcherCircle = new LauncherTouchCircle(game, launcher);
@@ -50,6 +53,18 @@ protected int appleCount=0;
 		{
 			if(!p.destroyed())p.destroy();
 		}
+
+		for(Breakable b : breakableList)
+		{
+			if(!b.destroyed())b.destroy();
+		}
+
+		portalList.clear();
+		portalList = null;
+
+		breakableList.clear();
+		breakableList = null;
+
 		launcher.destroy();
 		launcher=null;
 		super.destroy();
@@ -72,6 +87,11 @@ protected int appleCount=0;
 		Portal portal = new Portal(game, x, y);
 		portal.setCallback(this);
 		portalList.add(portal);
+	}
+
+	protected void addBreakable(Breakable breakable)
+	{
+		breakableList.add(breakable);
 	}
 
 }
