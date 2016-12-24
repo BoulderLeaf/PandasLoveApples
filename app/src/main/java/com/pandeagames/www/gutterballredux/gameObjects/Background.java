@@ -1,6 +1,7 @@
 package com.pandeagames.www.gutterballredux.gameObjects;
 
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
+import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 
 import com.pandeagames.R;
@@ -71,8 +72,8 @@ public class Background extends DrawableGameComponent {
 		Rect des = new Rect();
 		des.set((int)gameView.toScreenX(0.0f), 
 				(int)gameView.toScreenY(0.0f),
-				(int)gameView.toScreenX(0.0f)+(int)gameView.toScreen(27.0f),
-				(int)gameView.toScreenY(0.0f)+(int)gameView.toScreen(44.0f));
+				(int)gameView.toScreenX(0.0f)+(int)gameView.toScreen(Simulation.SIMULATION_WIDTH),
+				(int)gameView.toScreenY(0.0f)+(int)gameView.toScreen(Simulation.SIMULATION_HEIGHT));
 		Rect src = new Rect();
 		src.set(0, 
 				0,

@@ -32,6 +32,9 @@ import com.pandeagames.www.gutterballredux.Components.interfaces.IContactCallbac
 import com.pandeagames.www.gutterballredux.Components.interfaces.IUserInputComponent;
 
 public class Simulation extends AbstractGameComponent implements IUserInputComponent, QueryCallback, ContactListener {
+	public static int SIMULATION_WIDTH = 24;
+	public static int SIMULATION_HEIGHT = 40;
+
 	private World world;
 	private Vec2 gravity;
 	private float timeStep;
@@ -53,7 +56,7 @@ public Simulation(Game game, BufferedList<BodyComponent> bodyList){
 	timeStep = 1.0f/15.0f;
      velocityIterations = 1;
      positionIterations = 1;
-     worldSize=new Point(24,40);
+     worldSize=new Point(SIMULATION_WIDTH,SIMULATION_HEIGHT);
 	Settings.velocityThreshold = 0.1f;
      this.bodyList=bodyList;
      game.addInputComponent(this);
