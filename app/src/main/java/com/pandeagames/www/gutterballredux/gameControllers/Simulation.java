@@ -54,14 +54,15 @@ public Simulation(Game game, BufferedList<BodyComponent> bodyList){
      velocityIterations = 1;
      positionIterations = 1;
      worldSize=new Point(24,40);
+	Settings.velocityThreshold = 0.1f;
      this.bodyList=bodyList;
      game.addInputComponent(this);
-     
+
      beginContactListeners = new ArrayList<IContactCallback>();
      endContactListeners = new ArrayList<IContactCallback>();
      preSolveListeners = new ArrayList<IContactCallback>();
      postSolveListeners = new ArrayList<IContactCallback>();
-     
+
      world.setContactListener(this);
 }
 public Point getWorldSize(){
@@ -81,7 +82,6 @@ public void destroy() {
 @Override
 public void update(UpdateInfo updateInfo) {
 	world.step(timeStep, velocityIterations, positionIterations);
-	//world.step(updateInfo.getDeltaTime()/100, velocityIterations, positionIterations);
 	bodyList.clearBuffer();
 }
 @Override

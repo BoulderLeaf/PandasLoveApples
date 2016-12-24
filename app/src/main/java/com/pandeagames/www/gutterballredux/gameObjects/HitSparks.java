@@ -37,6 +37,7 @@ public class HitSparks extends DrawableGameComponent implements IContactCallback
 	private Vec2 vel2;
 	private BitmapDrawable grass;
 	private  Rect des;
+	private float contactVelocity = 4;
 	public HitSparks(Game game) {
 		super(game);
 		sparks=new Spark[sparkLimit];
@@ -129,7 +130,8 @@ public class HitSparks extends DrawableGameComponent implements IContactCallback
 	public void onPostSolve(Contact c, ContactImpulse cImpulse) {
 		// TODO Auto-generated method stub
 		//cImpulse.
-		if(c.isTouching()){
+		BodyComponent body = (BodyComponent)c.getFixtureA().getBody().getUserData();
+		if(c.isTouching() && body.getVelocity() > contactVelocity){
 			manifold=c.getManifold();
 			c.getWorldManifold(worldManifold);
 				int count=0;
