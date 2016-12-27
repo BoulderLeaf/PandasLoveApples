@@ -20,9 +20,8 @@ public class ThwompGeom extends LevelWalls {
 	@Override
 	public void createBody(Body body){
 		 PolygonShape groundBox = new PolygonShape();
-		 groundBox.setAsBox(9f,14f, new Vec2(15,22),0.0f);
+		groundBox.setAsBox(9f,14f, new Vec2(12f,17f),0.0f);
 		 body.createFixture(groundBox,0.0f);
 		super.createBody(body);
 	}
-
 }
