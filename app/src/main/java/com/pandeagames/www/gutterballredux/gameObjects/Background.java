@@ -71,8 +71,8 @@ public class Background extends DrawableGameComponent {
 		Rect des = new Rect();
 		des.set((int)gameView.toScreenX(0.0f), 
 				(int)gameView.toScreenY(0.0f),
-				(int)gameView.toScreenX(0.0f)+(int)gameView.toScreen(27.0f),
-				(int)gameView.toScreenY(0.0f)+(int)gameView.toScreen(44.0f));
+				(int)gameView.toScreenX(0.0f)+(int)gameView.toScreen(24.0f),
+				(int)gameView.toScreenY(0.0f)+(int)gameView.toScreen(40.0f));
 		Rect src = new Rect();
 		src.set(0, 
 				0,
