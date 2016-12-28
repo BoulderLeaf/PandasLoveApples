@@ -35,13 +35,4 @@ public class BodyEmmiter extends DrawableGameComponent {
 			factory.getBodyComp(getX(), getY());
 		}
 	}
-	@Override
-	public void draw(DrawInfo info){
-		super.draw(info);
-		//Body
-				info.getCanvas().drawCircle(gameView.toScreenX(getX()),
-						gameView.toScreenY(getY()),
-						gameView.toScreen(1.5f), paint);
-	}
-
 }

@@ -35,7 +35,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	private int lineSize=20;
 	private int lineDist=10;
 	private long delay=0;
-	private double maxStrength = 20;
+	private double maxStrength = 28;
 	private double baseStrength = 5;
 
 	private long lastLaunchTime=0;
@@ -247,7 +247,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 			vx=0;
 			vy=0;
 			
-			int limit = 2;
+			int limit = 1;
 			if(event.getHistorySize()+1<limit){
 				limit=event.getHistorySize();
 			}
@@ -258,9 +258,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 			}
 			if(vx!=0)vx=gameView.toWorld(vx/(limit-1));
 			if(vy!=0)vy=gameView.toWorld(vy/(limit-1));
-			
 		}
-		
 	}
 
 	@Override

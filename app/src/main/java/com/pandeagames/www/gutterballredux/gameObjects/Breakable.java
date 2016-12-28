@@ -15,12 +15,18 @@ public class Breakable extends BodyComponent {
     protected CollisionGroups collisionLayer = CollisionGroups.LEVEL_GEOM;
     protected int health = 1;
     protected int collisionCount = 0;
+    protected float breakVelocity = 15;
     private boolean queueBreak = false, queueCollide = false;
+    private BodyComponent queudBody = null;
+    protected Vec2 collideVelocity;
     public Breakable(Game game, Vec2 pos){
-
         super(game);
-
         bodyDef.position.set(pos);
+    }
+
+    public Breakable(Game game, Vec2 pos, Vec2 linearVelocity){
+        this(game, pos);
+        bodyDef.linearVelocity.set(linearVelocity);
     }
 
     @ Override
@@ -35,18 +41,29 @@ public class Breakable extends BodyComponent {
 
         ContactEdge contact = body.getContactList();
         boolean hasCollide = false;
+        BodyComponent other = null;
+        double velocity;
+
         while(contact!=null)
         {
-            if(((BodyComponent)contact.other.getUserData()).containsCollisionGroup(collisionLayer)){
+            other = (BodyComponent)contact.other.getUserData();
+            queudBody = other;
+            velocity = other.getVelocity();
+
+            if(other.containsCollisionGroup(collisionLayer) && velocity > breakVelocity){
+                if(!queueCollide){
+                    collideVelocity = other.getBody().getLinearVelocity().clone();
+                }
                 hasCollide = true;
                 queueCollide = true;
+
                 break;
             }
             contact=contact.next;
         }
 
         if(queueCollide && !hasCollide){
-            onCollide();
+            onCollide( queudBody );
             collisionCount++;
             queueCollide = false;
         }
@@ -56,6 +73,6 @@ public class Breakable extends BodyComponent {
         }
     }
 
-    protected void onCollide(){}
+    protected void onCollide(BodyComponent other){}
     protected void onBreak(){}
 }

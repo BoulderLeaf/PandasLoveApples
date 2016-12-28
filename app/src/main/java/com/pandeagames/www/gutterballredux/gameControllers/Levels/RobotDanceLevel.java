@@ -6,22 +6,30 @@ import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.RobotDanc
 import com.pandeagames.www.gutterballredux.gameObjects.ActorFactory;
 import com.pandeagames.www.gutterballredux.gameObjects.BodyEmmiter;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
+import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockMedium;
+
+import org.jbox2d.common.Vec2;
 
 public class RobotDanceLevel extends ThrowLevel {
 	private BodyEmmiter emitter1, emitter2;
 	public RobotDanceLevel(Game game, BodyComponent geometry) {
 		super(game, geometry);
 		// TODO Auto-generated constructor stub
-		createPortal(15, 3);
-		createPortal(10, 8);
-		createPortal(20, 8);
-		createPortal(15, 13);
-		createPortal(10, 18);
-		createPortal(15, 23);
-		createPortal(20, 18);
-		
-		emitter1 = new BodyEmmiter(game, 6, 3, new ActorFactory(game));
-		emitter2 = new BodyEmmiter(game, 24, 3, new ActorFactory(game));
+		createPortal(3, 24);
+		createPortal(20, 24);
+		createPortal(8,18);
+		createPortal(15, 18);
+		createPortal(3, 13);
+		createPortal(20, 13);
+		createPortal(20, 3);
+		createPortal(3, 3);
+
+		addBreakable(new BreakableBlockMedium(game, new Vec2(3f, 30f)));
+		addBreakable(new BreakableBlockMedium(game, new Vec2(9f, 30f)));
+		addBreakable(new BreakableBlockMedium(game, new Vec2(15f, 30f)));
+		addBreakable(new BreakableBlockMedium(game, new Vec2(21f, 30f)));
+
+		addBreakable(new BreakableBlockMedium(game, new Vec2(8f, 7f)));
 
 	}
 	public RobotDanceLevel(Game game) 

@@ -19,13 +19,21 @@ public class RobotDanceGeom extends LevelWalls {
 	@Override
 	public void createBody(Body body){
 		 PolygonShape groundBox = new PolygonShape();
-		 groundBox.setAsBox(3f,3f, new Vec2(15,8f),0.0f);
+		 groundBox.setAsBox(3f,3f, new Vec2(3f,7f),0.0f);
 		 body.createFixture(groundBox,0.0f);
-		 //
-		 groundBox = new PolygonShape();
-		 groundBox.setAsBox(3f,3f, new Vec2(15,18f),0.0f);
-		 body.createFixture(groundBox,0.0f);
-		 //
+
+		groundBox = new PolygonShape();
+		groundBox.setAsBox(3f,3f, new Vec2(3,18f),0.0f);
+		body.createFixture(groundBox,0.0f);
+
+		groundBox = new PolygonShape();
+		groundBox.setAsBox(3f,3f, new Vec2(21,18f),0.0f);
+		body.createFixture(groundBox,0.0f);
+
+		groundBox = new PolygonShape();
+		groundBox.setAsBox(6.5f,3f, new Vec2(17.5f,7f),0.0f);
+		body.createFixture(groundBox,0.0f);
+
 		super.createBody(body);
 	}
 

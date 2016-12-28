@@ -130,6 +130,11 @@ public void emitBodyTouch(MotionEvent event){
 		}
 	}
 
+	public double getVelocity(){
+		Vec2 d = body.getLinearVelocity();
+		return Math.sqrt(d.x * d.x + d.y * d.y);
+	}
+
 	public boolean getDrawBody(){
 		return drawBody;
 	}
