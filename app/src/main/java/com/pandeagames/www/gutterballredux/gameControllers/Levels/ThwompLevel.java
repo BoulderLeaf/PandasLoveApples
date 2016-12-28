@@ -30,6 +30,5 @@ public class ThwompLevel extends ThrowLevel {
 	public void destroy(){
 		super.destroy();
 	}
-
 }
 
