@@ -22,18 +22,32 @@ private Paint paint;
 private BitmapDrawable sphere;
 private RadialCollider collider;
 private Floater floater;
+	private AppleType type;
 private IObtainedCallback obtainedCallback;
-	public Portal(Game activity, float x, float y) {
+	public Portal(Game activity, float x, float y, AppleType type) {
 		super(activity);
 		setPos(x, y);
-		floater=new Floater(activity, 2, 0.2f);
-		// TODO Auto-generated constructor stub
-		paint = new Paint();
 
+		this.type = type;
+
+		//used to generate the floating animation of the apple
+		floater=new Floater(activity, 2, 0.2f);
+
+
+		paint = new Paint();
 		paint.setARGB(255, 107, 255, 107);
+
+		//collider for when the apple is struck by the pandas.
 		collider = new RadialCollider(activity,this, 2, RadialID.PORTAL);
-		sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.green_sphere);
-		
+
+		//choose artwork for apple based on apple type.
+		if(type == AppleType.NORMAL){
+			sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.green_sphere);
+		}
+		else
+		{
+			sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.golden_apple);
+		}
 	}
 	@Override
 	public void draw(DrawInfo info){
@@ -41,16 +55,12 @@ private IObtainedCallback obtainedCallback;
 		float x=getX();
 		float y=getY()+floater.x/20;
 		float r=1;
-		/*info.getCanvas().drawCircle(gameView.toScreenX(getX()),
-				gameView.toScreenY(getY()),
-				gameView.toScreen(1), paint);*/
+
 		Rect des = new Rect();
 		des.set((int)gameView.toScreenX(x-r), 
 				(int)gameView.toScreenY(y-r),
 				(int)gameView.toScreenX(x+r),
 				(int)gameView.toScreenY(y+r));
-		
-		
 		
 		sphere.setBounds(des);
 		sphere.draw(info.getCanvas());

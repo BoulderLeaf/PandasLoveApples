@@ -39,6 +39,8 @@ public class BreakableBlock extends Breakable {
 
         paint=new Paint();
         paint.setARGB(255, 255, 0, 0);
+
+        drawBody=false;
     }
     @Override
     protected void onCollide(BodyComponent other){

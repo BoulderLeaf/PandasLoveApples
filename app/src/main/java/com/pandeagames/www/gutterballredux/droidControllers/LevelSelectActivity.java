@@ -84,35 +84,7 @@ public class LevelSelectActivity extends SwingActivity implements android.view.V
 	}
 	public void selectLevel(View view)
 	{
-		switch(view.getId()){
-		case R.id.level1:
-			selectedLevel=1;
-			break;
-		case R.id.level2:
-			selectedLevel=2;
-			break;
-		case R.id.level3:
-			selectedLevel=3;
-			break;
-		case R.id.level4:
-			selectedLevel=4;
-			break;
-		case R.id.level5:
-			selectedLevel=5;
-			break;
-		case R.id.level6:
-			selectedLevel=6;
-			break;
-		case R.id.level7:
-			selectedLevel=7;
-			break;
-		case R.id.level8:
-			selectedLevel=8;
-			break;
-		case R.id.level9:
-			selectedLevel=9;
-			break;
-		}	
+		selectedLevel = view.getId();
 		playLevel();
 	}
 	

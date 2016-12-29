@@ -41,7 +41,7 @@ public class BreakableBlockMedium extends BreakableBlock {
     @ Override
     public void createBody(Body body){
         PolygonShape groundBox = new PolygonShape();
-        groundBox.setAsBox(3f,3f);
+        groundBox.setAsBox(2.95f,2.95f);
         body.createFixture(groundBox,0.0f);
 
         super.createBody(body);

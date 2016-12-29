@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.AppleLevelManager;
+import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
 import com.pandeagames.www.gutterballredux.gameObjects.Breakable;
 import com.pandeagames.www.gutterballredux.gameObjects.HitSparks;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal;
@@ -75,7 +76,7 @@ protected int appleCount=0;
 		if(portalList.size()==0){
 			((AppleLevelManager)(game.getGutterApp().getLevelManager())).addApple(appleCount);
 			//have completed the level
-			app.getLevelManager().completeLevel(game.getLevelIndex()-1);
+			app.getLevelManager().completeLevel(game.getLevelIndex());
 			game.setResult(game.RESULT_OK, null);
 			//finish();
 			game.finish();
@@ -83,8 +84,14 @@ protected int appleCount=0;
 	}
 	protected void createPortal(float x, float y)
 	{
+		this.createPortal(x, y, AppleType.NORMAL);
+	}
+
+
+	protected void createPortal(float x, float y, AppleType type)
+	{
 		appleCount++;
-		Portal portal = new Portal(game, x, y);
+		Portal portal = new Portal(game, x, y, type);
 		portal.setCallback(this);
 		portalList.add(portal);
 	}

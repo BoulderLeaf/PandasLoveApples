@@ -11,6 +11,7 @@ public class RobotDanceGeom extends LevelWalls {
 	public RobotDanceGeom(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
+		drawBody=false;
 	}
 	@Override
 	public void createBody(){
@@ -31,7 +32,7 @@ public class RobotDanceGeom extends LevelWalls {
 		body.createFixture(groundBox,0.0f);
 
 		groundBox = new PolygonShape();
-		groundBox.setAsBox(6.5f,3f, new Vec2(17.5f,7f),0.0f);
+		groundBox.setAsBox(6f,3f, new Vec2(18f,7f),0.0f);
 		body.createFixture(groundBox,0.0f);
 
 		super.createBody(body);

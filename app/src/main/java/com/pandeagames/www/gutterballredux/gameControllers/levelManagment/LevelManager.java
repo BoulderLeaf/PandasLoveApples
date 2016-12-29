@@ -6,6 +6,8 @@ import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.pandeagames.R;
+
 public class LevelManager {
 	public static final String UNLOCK_LVL_PREFS = "MyPrefsFile";
 	public static final int STATUS_LOCKED = 0;
@@ -18,7 +20,7 @@ public class LevelManager {
 	private int levelsCompleted = 0;
 	private int levelsLocked = 0;
 	
-	private Context context;
+	protected Context context;
 	
 	private List<IStatusListener> statusListeners;
 	

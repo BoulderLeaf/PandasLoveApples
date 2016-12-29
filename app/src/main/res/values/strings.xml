@@ -17,6 +17,7 @@
 <string name="level7Btn">Level 7</string>
 <string name="level8Btn">Level 8</string>
 <string name="level9Btn">Level 9</string>
+    <string name="level_name_default">Default Name</string>
 
 <!-- TOAST -->
 <string name="main_msg">New Levels have been unlocked!</string>

@@ -17,6 +17,8 @@ public class Debry02 extends AbstractDebry {
     public Debry02(Game game, Vec2 pos, Vec2 velocity){
         super(game, pos, velocity);
 
+        drawBody=false;
+
         drawRect = new Rect();
         count = 7;
         verticies =  new Vec2[count];

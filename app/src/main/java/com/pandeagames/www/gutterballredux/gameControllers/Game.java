@@ -137,31 +137,31 @@ protected void onRestart(){
 		radialCollision=new RadialCollisionController(this);
 		switch(levelIndex)
 		{
-		case 1:
+		case R.id.pingpong:
 			level = new PingPong(this);
 			break;
-		case 2:
+		case R.id.thwomp:
 			level = new ThwompLevel(this);
 			break;
-		case 3:
+		case R.id.bunkbedlevel:
 			level = new BunkBedLevel(this);
 			break;
-		case 4:
+		case R.id.hiddendragonlevel:
 			level = new HiddenDragonLevel(this);
 			break;
-		case 5:
+		case R.id.condoconundrum:
 			level = new CondoConundrum(this);
 			break;
-		case 6:
+		case R.id.piggyback:
 			level = new PiggyBack(this);
 			break;
-		case 7:
+		case R.id.eff:
 			level = new Eff(this);
 			break;
-		case 8:
+		case R.id.robotdancelevel:
 			level = new RobotDanceLevel(this);
 			break;
-		case 9:
+		case R.id.barrel:
 			level = new Barrel(this);
 			break;
 			default:

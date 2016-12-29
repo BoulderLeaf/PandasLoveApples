@@ -12,6 +12,7 @@ public class ThwompGeom extends LevelWalls {
 	public ThwompGeom(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
+		drawBody=false;
 	}
 	@Override
 	public void createBody(){

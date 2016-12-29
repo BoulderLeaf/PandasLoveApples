@@ -1,0 +1,11 @@
+{levels:[
+  {
+    id:"thwomp",
+    appleCount:10
+  },
+
+  {
+    id:"robot_dance",
+    appleCount: 1
+  }
+]}
