@@ -97,7 +97,7 @@ public class AppleLevelManager extends LevelManager {
 						level.getString("id"),
 						name == 0 ? R.string.level_name_default:name,
 						level.getInt("appleCount"),
-						bg == 0 ? R.drawable.background:bg,
+						bg == 0 ? R.drawable.background_01:bg,
 						bg_mini == 0 ? R.drawable.background:bg_mini,
 						bg_mini_locked == 0 ? R.drawable.disabled_level:bg_mini_locked,
 						bg_mini_unplayed == 0 ? R.drawable.unlocked_level:bg_mini_unplayed

@@ -9,19 +9,14 @@ import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
 public class Plinko extends ThrowLevel {
 
-	public Plinko(Game game, BodyComponent geometry) {
-		this(game, geometry, R.drawable.background);
-		// TODO Auto-generated constructor stub
-	}
-
-	public Plinko(Game game, BodyComponent geometry, int bgId) {
-		super(game, geometry, bgId);
+	public Plinko(Game game, BodyComponent geometry, LevelDef levelDef) {
+		super(game, geometry, levelDef);
 		// TODO Auto-generated constructor stub
 		launcher.setX(4);
 		
 	}
-	public Plinko(Game game) {
-		this(game, new PlinkoGeom(game));
+	public Plinko(Game game, LevelDef levelDef) {
+		this(game, new PlinkoGeom(game), levelDef);
 		// TODO Auto-generated constructor stub
 	}
 }

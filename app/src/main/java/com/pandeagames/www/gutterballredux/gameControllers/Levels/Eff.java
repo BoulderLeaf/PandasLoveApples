@@ -9,8 +9,8 @@ import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
 public class Eff extends ThrowLevel {
 private BodyEmmiter emitter;
-	public Eff(Game game, BodyComponent geometry) {
-		super(game, geometry);
+	public Eff(Game game, BodyComponent geometry, LevelDef levelDef) {
+		super(game, geometry, levelDef);
 		// TODO Auto-generated constructor stub
 		createPortal(27, 5);
 		createPortal(21, 15);
@@ -23,8 +23,8 @@ private BodyEmmiter emitter;
 		
 	}
 
-	public Eff(Game game) {
-		this(game, new EffGeom(game));
+	public Eff(Game game, LevelDef levelDef) {
+		this(game, new EffGeom(game), levelDef);
 		// TODO Auto-generated constructor stub
 	}
 }

@@ -12,8 +12,8 @@ import org.jbox2d.common.Vec2;
 
 public class condo_conundrum extends ThrowLevel {
 
-	public condo_conundrum(Game game, BodyComponent geometry) {
-		super(game, geometry, R.drawable.background_01);
+	public condo_conundrum(Game game, BodyComponent geometry, LevelDef levelDef) {
+		super(game, geometry, levelDef);
 		// TODO Auto-generated constructor stub
 		createPortal(9, 6);
 		createPortal(9, 16);
@@ -42,8 +42,8 @@ public class condo_conundrum extends ThrowLevel {
 
 	}
 
-	public condo_conundrum(Game game) {
-		this(game, new CondoConundrumGeom(game));
+	public condo_conundrum(Game game, LevelDef levelDef) {
+		this(game, new CondoConundrumGeom(game), levelDef);
 		// TODO Auto-generated constructor stub
 	}
 }

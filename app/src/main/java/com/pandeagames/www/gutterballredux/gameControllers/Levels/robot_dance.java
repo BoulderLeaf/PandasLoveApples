@@ -13,16 +13,43 @@ import org.jbox2d.common.Vec2;
 
 public class robot_dance extends ThrowLevel {
 	private BodyEmmiter emitter1, emitter2;
-	public robot_dance(Game game, BodyComponent geometry) {
-		super(game, geometry, R.drawable.roboto_dance);
+	public robot_dance(Game game, BodyComponent geometry, LevelDef levelDef) {
+		super(game, geometry, levelDef);
 		// TODO Auto-generated constructor stub
 
-		createPortal(8,18);
-		createPortal(15, 18);
-		createPortal(3, 12.5f);
-		createPortal(20, 12.5f);
-		createPortal(20, 2, AppleType.GOLDEN);
-		createPortal(3, 2);
+
+		createPortal(1.5f, 2);
+		createPortal(4.5f, 2);
+		createPortal(7.5f, 2);
+		createPortal(10.5f, 2);
+		createPortal(13.5f, 2, AppleType.GOLDEN);
+		createPortal(16.5f, 2, AppleType.GOLDEN);
+		createPortal(19.5f, 2, AppleType.GOLDEN);
+		createPortal(22.5f, 2, AppleType.GOLDEN);
+
+		createPortal(1.5f, 12.5f);
+		createPortal(4.5f, 12.5f);
+		createPortal(7.5f, 12.5f);
+		createPortal(10.5f, 12.5f);
+		createPortal(13.5f, 12.5f);
+		createPortal(16.5f, 12.5f);
+		createPortal(19.5f, 12.5f);
+		createPortal(22.5f, 12.5f);
+
+		createPortal(7.5f,15.5f);
+		createPortal(10.5f,15.5f);
+		createPortal(13.5f,15.5f);
+		createPortal(16.5f,15.5f);
+
+		createPortal(7.5f,18.5f);
+		createPortal(10.5f,18.5f);
+		createPortal(13.5f,18.5f);
+		createPortal(16.5f,18.5f);
+
+		createPortal(7.5f,21.5f);
+		createPortal(10.5f,21.5f);
+		createPortal(13.5f,21.5f);
+		createPortal(16.5f,21.5f);
 
 		addBreakable(new BreakableBlockMedium(game, new Vec2(9f, 7f)));
 
@@ -42,9 +69,9 @@ public class robot_dance extends ThrowLevel {
 		addBreakable(new BreakableBlockSmall(game, new Vec2(1.5f, 40.5f)));
 
 	}
-	public robot_dance(Game game)
+	public robot_dance(Game game, LevelDef levelDef)
 	{
-		this(game, new RobotDanceGeom(game));
+		this(game, new RobotDanceGeom(game), levelDef);
 		// TODO Auto-generated constructor stub
 	}
 

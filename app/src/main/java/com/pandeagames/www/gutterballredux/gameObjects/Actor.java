@@ -76,15 +76,10 @@ public class Actor extends BodyComponent implements IRadialCollider{
 		sphere.setBounds(des);
 		sphere.draw(info.getCanvas());
 		}
-		
 	}
 	@Override
 	public void radialCollide(RadialCollider other) {
 		// TODO Auto-generated method stub
-		if(other.getId()==RadialID.PORTAL)
-		{
-			destroy();
-		}
 	}
 	public int drawOrder(){
 		return 201;

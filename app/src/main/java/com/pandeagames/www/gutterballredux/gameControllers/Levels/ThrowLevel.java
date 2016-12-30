@@ -29,12 +29,8 @@ protected List<Portal> portalList;
 protected HitSparks sparks;
 protected GutterBallApp app;
 protected int appleCount=0;
-	public ThrowLevel(Game game, BodyComponent geometry) {
-		super(game, geometry);
-		initialize();
-	}
-	public ThrowLevel(Game game, BodyComponent geometry, int bgId) {
-		super(game, geometry, bgId);
+	public ThrowLevel(Game game, BodyComponent geometry, LevelDef levelDef) {
+		super(game, geometry, levelDef);
 		initialize();
 	}
 	private void initialize(){

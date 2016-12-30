@@ -7,8 +7,8 @@ import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
 public class PiggyBack extends ThrowLevel {
 
-	public PiggyBack(Game game, BodyComponent geometry) {
-		super(game, geometry);
+	public PiggyBack(Game game, BodyComponent geometry, LevelDef levelDef) {
+		super(game, geometry, levelDef);
 		// TODO Auto-generated constructor stub
 		createPortal(9, 3);
 		createPortal(18, 3);
@@ -16,8 +16,8 @@ public class PiggyBack extends ThrowLevel {
 		createPortal(18, 17);
 		createPortal(28, 21);
 	}
-	public PiggyBack(Game game) {
-		this(game, new PiggyBackGeom(game));
+	public PiggyBack(Game game, LevelDef levelDef) {
+		this(game, new PiggyBackGeom(game), levelDef);
 		// TODO Auto-generated constructor stub
 	}
 }

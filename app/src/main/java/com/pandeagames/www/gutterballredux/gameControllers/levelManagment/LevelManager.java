@@ -48,6 +48,15 @@ public class LevelManager {
 		return STATUS_LOCKED;
 	}
 
+	public LevelDef getLevelById(String id){
+		for(int i =0; i<levelDefs.size(); i++){
+			if(levelDefs.get(i).getId().equals(id)){
+				return levelDefs.get(i);
+			}
+		}
+		return null;
+	}
+
 	public void setStatus(String id, int status) {
 
 			SharedPreferences.Editor editor = levelPreferences.edit();

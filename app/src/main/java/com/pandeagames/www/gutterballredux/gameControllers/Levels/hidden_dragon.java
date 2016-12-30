@@ -9,9 +9,9 @@ import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
 public class hidden_dragon extends ThrowLevel {
 	private Forground forground;
-	public hidden_dragon(Game game, BodyComponent geometry)
+	public hidden_dragon(Game game, BodyComponent geometry, LevelDef levelDef)
 	{
-		super(game, geometry,R.drawable.hiddendragon);
+		super(game, geometry,levelDef);
 		// TODO Auto-generated constructor stub
 		createPortal(8, 3);
 		createPortal(16, 3);
@@ -24,8 +24,8 @@ public class hidden_dragon extends ThrowLevel {
 
 	}
 
-	public hidden_dragon(Game game) {
-		this(game, new HiddenDragonGeom(game));
+	public hidden_dragon(Game game, LevelDef levelDef) {
+		this(game, new HiddenDragonGeom(game), levelDef);
 		// TODO Auto-generated constructor stub
 	}
 

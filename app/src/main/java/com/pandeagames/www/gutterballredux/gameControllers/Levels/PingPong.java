@@ -6,14 +6,14 @@ import com.pandeagames.www.gutterballredux.gameObjects.Portal;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
 public class PingPong extends ThrowLevel {
-	public PingPong(Game game, BodyComponent geometry) {
-		super(game, geometry);
+	public PingPong(Game game, BodyComponent geometry, LevelDef levelDef) {
+		super(game, geometry, levelDef);
 		// TODO Auto-generated constructor stub
 		createPortal(3, 8);
 		createPortal(3, 21);
 	}
-	public PingPong(Game game){
-		this(game, new Level1Walls(game));
+	public PingPong(Game game, LevelDef levelDef){
+		this(game, new Level1Walls(game), levelDef);
 	}
 
 }
