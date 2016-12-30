@@ -41,11 +41,8 @@ public class LevelLayoutController extends AbstractComponent implements IStatusL
 
 			//create a new row every 3rd button
 			if(i % 3 == 0){
-				if(row != null){
-					layout.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
-				}
 				row = new TableRow(activity);
-
+				layout.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
 			}
 
 			if(row == null) return;

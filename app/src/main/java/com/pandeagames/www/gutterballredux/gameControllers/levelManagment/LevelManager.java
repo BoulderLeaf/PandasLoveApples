@@ -120,6 +120,9 @@ public class LevelManager {
 		for (int i = 0; i < levelDefs.size(); i++) {
 			lockLevel(levelDefs.get(i).getId());
 		}
+		if(levelDefs.size() >=1){
+			unlockLevel(levelDefs.get(0).getId());
+		}
 	}
 	public void unlockAll(){
 		for (int i = 0; i < levelDefs.size(); i++) {
