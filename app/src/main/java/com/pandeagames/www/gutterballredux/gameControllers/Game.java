@@ -1,44 +1,26 @@
 package com.pandeagames.www.gutterballredux.gameControllers;
 
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.Barrel;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.BunkBedLevel;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.CondoConundrum;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.Eff;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.HiddenDragonLevel;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Level;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.PiggyBack;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.PingPong;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.Plinko;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.RobotDanceLevel;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.ThrowLevel;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.ThwompLevel;
-import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
+import com.pandeagames.www.gutterballredux.gameControllers.Levels.LevelDef;
 
-import java.util.Iterator;
-import java.util.Vector;
-
-import org.jbox2d.dynamics.Body;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import com.pandeagames.R;
 
 import com.pandeagames.www.gutterballredux.droidControllers.SwingActivity;
 
 import com.pandeagames.www.gutterballredux.threads.BufferedList;
-import com.pandeagames.www.gutterballredux.threads.DrawThread;
 import com.pandeagames.www.gutterballredux.threads.GameThread;
-import com.pandeagames.www.gutterballredux.Components.AbstractComponent;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
-import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
 import com.pandeagames.www.gutterballredux.Components.AbstractGameComponent;
-import com.pandeagames.www.gutterballredux.Components.interfaces.IDrawableComponent;
 import com.pandeagames.www.gutterballredux.Drawing.DebugDraw;
-import android.app.Activity;
+
+import android.content.Context;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.SurfaceHolder;
 
 import com.pandeagames.BuildConfig;
@@ -51,7 +33,8 @@ public class Game extends SwingActivity {
 	private BufferedList<BodyComponent> bodyList;
 	private MediaPlayer mp;
 	private RadialCollisionController radialCollision;
-	private int levelIndex;
+	private String levelId;
+	private LevelDef levelDef;
 	
 	private GameSoundPool sp;
 	
@@ -68,8 +51,8 @@ public class Game extends SwingActivity {
 	public Level getLevel() {
 		return level;
 	}
-	public int getLevelIndex() {
-		return levelIndex;
+	public String getLevelId() {
+		return levelId;
 	}
 	public Simulation getSimulation() {
 		return simulation;
@@ -124,7 +107,8 @@ protected void onRestart(){
 		super.onCreate(savedInstanceState, new GameView(this));
 		if(level==null){
 		Bundle bundle = getIntent().getExtras();
-		levelIndex=bundle.getInt("level");
+		levelId=bundle.getString("level");
+
 		gameComponentList = new BufferedList<AbstractGameComponent>();
 		bodyList = new BodyList<BodyComponent>();
 		simulation = new Simulation(this, bodyList);
@@ -134,39 +118,25 @@ protected void onRestart(){
 			debugDraw = new DebugDraw(this, bodyList);
 		}
 
-		radialCollision=new RadialCollisionController(this);
-		switch(levelIndex)
-		{
-		case R.id.pingpong:
-			level = new PingPong(this);
-			break;
-		case R.id.thwomp:
-			level = new ThwompLevel(this);
-			break;
-		case R.id.bunkbedlevel:
-			level = new BunkBedLevel(this);
-			break;
-		case R.id.hiddendragonlevel:
-			level = new HiddenDragonLevel(this);
-			break;
-		case R.id.condoconundrum:
-			level = new CondoConundrum(this);
-			break;
-		case R.id.piggyback:
-			level = new PiggyBack(this);
-			break;
-		case R.id.eff:
-			level = new Eff(this);
-			break;
-		case R.id.robotdancelevel:
-			level = new RobotDanceLevel(this);
-			break;
-		case R.id.barrel:
-			level = new Barrel(this);
-			break;
-			default:
-				level  = new Plinko(this); 
+			radialCollision=new RadialCollisionController(this);
+
+		try{
+			Class<?> clazz = Class.forName("com.pandeagames.www.gutterballredux.gameControllers.Levels."+levelId);
+			Constructor<?> constructor = clazz.getConstructor(Game.class);
+			level = (Level) constructor.newInstance(this);
+		}catch(IllegalAccessException ex){
+			return;
+		}catch(ClassNotFoundException ex){
+			return;
+		}catch(InstantiationException ex){
+			return;
+		}catch(NoSuchMethodException ex){
+			return;
+		}catch(InvocationTargetException ex){
+			return;
 		}
+
+
 		scaler = new Point(simulation.getWorldSize().x,
 				simulation.getWorldSize().y);
 		}

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.pandeagames.R;
+import com.pandeagames.www.gutterballredux.gameControllers.Levels.AppleLevelDef;
+import com.pandeagames.www.gutterballredux.gameControllers.Levels.LevelDef;
 
 public class LevelManager {
 	public static final String UNLOCK_LVL_PREFS = "MyPrefsFile";
@@ -19,6 +21,8 @@ public class LevelManager {
 	private int levelsUnlocked = 0;
 	private int levelsCompleted = 0;
 	private int levelsLocked = 0;
+
+	protected List<LevelDef> levelDefs;
 	
 	protected Context context;
 	
@@ -44,33 +48,32 @@ public class LevelManager {
 		return STATUS_LOCKED;
 	}
 
-	public void setStatus(int levelIndex, int status) {
-		if (levelIndex < numLevels) {
+	public void setStatus(String id, int status) {
+
 			SharedPreferences.Editor editor = levelPreferences.edit();
-			editor.putInt(Integer.toString(levelIndex), status);
+			editor.putInt(id, status);
 			editor.commit();
-			levelStatus[levelIndex] = status;
+
 			updateCounts();
-			for(IStatusListener listener : statusListeners){
-				listener.levelStatusUpdate(levelIndex, status);
+			for(IStatusListener listener : statusListeners) {
+				listener.levelStatusUpdate(id, status);
 			}
-		}
 	}
 	
-	public int getStatus(int levelIndex){
-		return levelPreferences.getInt(Integer.toString(levelIndex),STATUS_LOCKED);
+	public int getStatus(String id){
+		return levelPreferences.getInt(id,STATUS_LOCKED);
 	}
 
-	public void unlockLevel(int levelIndex) {
-		setStatus(levelIndex, STATUS_UNLOCKED);
+	public void unlockLevel(String id) {
+		setStatus(id, STATUS_UNLOCKED);
 	}
 
-	public void lockLevel(int levelIndex) {
-		setStatus(levelIndex, STATUS_LOCKED);
+	public void lockLevel(String id) {
+		setStatus(id, STATUS_LOCKED);
 	}
 
-	public void completeLevel(int levelIndex) {
-		setStatus(levelIndex, STATUS_COMPLETE);
+	public void completeLevel(String id) {
+		setStatus(id, STATUS_COMPLETE);
 	}
 
 	private void updateCounts() {
@@ -111,16 +114,19 @@ public class LevelManager {
 		statusListeners.remove(listener);
 	}
 	public interface IStatusListener{
-		public void levelStatusUpdate(int levelIndex, int status);
+		public void levelStatusUpdate(String id, int status);
 	}
 	public void reset(){
-		for (int i = 0; i < numLevels; i++) {
-			lockLevel(i);
+		for (int i = 0; i < levelDefs.size(); i++) {
+			lockLevel(levelDefs.get(i).getId());
 		}
 	}
 	public void unlockAll(){
-		for (int i = 0; i < numLevels; i++) {
-			unlockLevel(i);
+		for (int i = 0; i < levelDefs.size(); i++) {
+			unlockLevel(levelDefs.get(i).getId());
 		}
+	}
+	public List<LevelDef> getLevelDefs() {
+		return levelDefs;
 	}
 }

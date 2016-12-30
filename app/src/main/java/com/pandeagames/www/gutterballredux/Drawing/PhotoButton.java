@@ -6,6 +6,7 @@ import java.util.List;
 import org.jbox2d.common.Vec2;
 
 import com.pandeagames.R;
+import com.pandeagames.www.gutterballredux.gameControllers.Levels.LevelDef;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
@@ -40,6 +41,7 @@ public class PhotoButton extends Button implements AnimatorListener {
 	private boolean photoOnDisabled=true;
 	private boolean markForUnlock=false;
 	public boolean levelBeaten=false;
+	public LevelDef levelDef;
 	
 	private Paint textPaint;
 	private Paint coverPaint;
@@ -58,6 +60,19 @@ public class PhotoButton extends Button implements AnimatorListener {
 	public PhotoButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		handleAttrs(context,attrs);
+		constructPaint();
+	}
+	public PhotoButton(Context context, int photoId, int photoDisabledId, int iconDisabledId, int unlockedIconId, float heightRatio) {
+		super(context);
+
+		setPhotoRes(photoId);
+		setUnlockedRes(unlockedIconId);
+		setDisabledPhotoRes(photoDisabledId);
+		setDisabledIcon(iconDisabledId);
+
+		photoOnDisabled = true;
+		this.heightRatio = heightRatio;
+
 		constructPaint();
 	}
 	private void constructPaint(){
@@ -86,11 +101,6 @@ public class PhotoButton extends Button implements AnimatorListener {
 			setDisabledIcon(disabledIconRes);
 		} finally{
 			a.recycle();
-		}
-		if(heightRatio!=1.0f){
-			//this.setLayoutParams(new LayoutParams(this.getWidth(), (int)(this.getWidth()*heightRatio)));
-			//this.setLayoutParams(getLayoutParams().)
-			//this.setHeight((int)(this.getWidth()*heightRatio));
 		}
 	}
 	public void draw(Canvas c){
@@ -150,25 +160,26 @@ public class PhotoButton extends Button implements AnimatorListener {
 			}
 		}
 		c.drawRect(coverDes, coverPaint);
-		//c.drawText(this.getText().toString(), 0.0f, 0.0f, p);
 	}
 	
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		 int width = getMeasuredWidth();
-		    int height = getMeasuredHeight();
-		    int widthWithoutPadding = width - getPaddingLeft() - getPaddingRight();
-		    int heigthWithoutPadding = height - getPaddingTop() - getPaddingBottom();
-		 
-		    int maxWidth = (int) (heigthWithoutPadding * heightRatio);
-		    int maxHeight = (int) (widthWithoutPadding * heightRatio);
-		    if (widthWithoutPadding  < maxWidth) {
-		        width = maxWidth + getPaddingLeft() + getPaddingRight();
-		    } else {
-		        height = maxHeight + getPaddingTop() + getPaddingBottom();
-		    }
-		 
+
+		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+
+
+		int desiredWidth = widthSize - getPaddingLeft() - getPaddingRight();
+		int desiredHeight = (int)(widthSize * heightRatio);
+
+		int width =getMeasuredWidth();
+		int height = (int)((width - getCompoundPaddingRight() - getCompoundPaddingLeft()) * heightRatio);
+
 		    setMeasuredDimension(width, height);
+
 	}
 	public void setDisabledPhotoRes(int res){
 		if(res==-1)return;

@@ -2,9 +2,7 @@ package com.pandeagames.www.gutterballredux.gameControllers.Levels;
 
 import com.pandeagames.R;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.PiggyBackGeom;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.RobotDanceGeom;
-import com.pandeagames.www.gutterballredux.gameObjects.ActorFactory;
 import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
 import com.pandeagames.www.gutterballredux.gameObjects.BodyEmmiter;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
@@ -13,9 +11,9 @@ import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockSmall;
 
 import org.jbox2d.common.Vec2;
 
-public class RobotDanceLevel extends ThrowLevel {
+public class robot_dance extends ThrowLevel {
 	private BodyEmmiter emitter1, emitter2;
-	public RobotDanceLevel(Game game, BodyComponent geometry) {
+	public robot_dance(Game game, BodyComponent geometry) {
 		super(game, geometry, R.drawable.roboto_dance);
 		// TODO Auto-generated constructor stub
 
@@ -44,7 +42,7 @@ public class RobotDanceLevel extends ThrowLevel {
 		addBreakable(new BreakableBlockSmall(game, new Vec2(1.5f, 40.5f)));
 
 	}
-	public RobotDanceLevel(Game game) 
+	public robot_dance(Game game)
 	{
 		this(game, new RobotDanceGeom(game));
 		// TODO Auto-generated constructor stub

@@ -3,7 +3,6 @@ package com.pandeagames.www.gutterballredux.gameControllers.Levels;
 import com.pandeagames.R;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.CondoConundrumGeom;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.HiddenDragonGeom;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockLarge;
 import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockMedium;
@@ -11,9 +10,9 @@ import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockSmall;
 
 import org.jbox2d.common.Vec2;
 
-public class CondoConundrum extends ThrowLevel {
+public class condo_conundrum extends ThrowLevel {
 
-	public CondoConundrum(Game game, BodyComponent geometry) {
+	public condo_conundrum(Game game, BodyComponent geometry) {
 		super(game, geometry, R.drawable.background_01);
 		// TODO Auto-generated constructor stub
 		createPortal(9, 6);
@@ -43,7 +42,7 @@ public class CondoConundrum extends ThrowLevel {
 
 	}
 
-	public CondoConundrum(Game game) {
+	public condo_conundrum(Game game) {
 		this(game, new CondoConundrumGeom(game));
 		// TODO Auto-generated constructor stub
 	}

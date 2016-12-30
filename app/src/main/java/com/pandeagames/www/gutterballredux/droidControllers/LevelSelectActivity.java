@@ -6,6 +6,7 @@ import com.pandeagames.R;
 
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.LevelLayoutController;
+import com.pandeagames.www.gutterballredux.gameControllers.Levels.LevelDef;
 import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.AppleLevelManager;
 import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.LazyLevelManager;
 import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.LevelManager;
@@ -24,7 +25,7 @@ import android.widget.Toast;
 
 public class LevelSelectActivity extends SwingActivity implements android.view.View.OnClickListener {
 	private static final String UNLOCKED_STATE="levelsUnlocked"; 
-	private int selectedLevel=0;
+	private String selectedLevel="";
 	private LevelManager levelManager;
 	private Button resetLevelsButton;
 	private Button unlockLevelsButton;
@@ -82,9 +83,9 @@ public class LevelSelectActivity extends SwingActivity implements android.view.V
 		mTracker.setScreenName("Image~" + name);
 		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 	}
-	public void selectLevel(View view)
+	public void selectLevel(LevelDef def)
 	{
-		selectedLevel = view.getId();
+		selectedLevel = def.getId();
 		playLevel();
 	}
 	

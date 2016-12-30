@@ -1,18 +1,15 @@
 package com.pandeagames.www.gutterballredux.gameControllers.Levels;
 
-import android.graphics.drawable.BitmapDrawable;
-
 import com.pandeagames.R;
 
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.HiddenDragonGeom;
-import com.pandeagames.www.gutterballredux.gameObjects.Background;
 import com.pandeagames.www.gutterballredux.gameObjects.Forground;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
-public class HiddenDragonLevel extends ThrowLevel {
+public class hidden_dragon extends ThrowLevel {
 	private Forground forground;
-	public HiddenDragonLevel(Game game, BodyComponent geometry) 
+	public hidden_dragon(Game game, BodyComponent geometry)
 	{
 		super(game, geometry,R.drawable.hiddendragon);
 		// TODO Auto-generated constructor stub
@@ -27,7 +24,7 @@ public class HiddenDragonLevel extends ThrowLevel {
 
 	}
 
-	public HiddenDragonLevel(Game game) {
+	public hidden_dragon(Game game) {
 		this(game, new HiddenDragonGeom(game));
 		// TODO Auto-generated constructor stub
 	}

@@ -2,6 +2,7 @@ package com.pandeagames.www.gutterballredux.gameControllers.levelManagment;
 
 import com.pandeagames.R;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.AppleLevelDef;
+import com.pandeagames.www.gutterballredux.gameControllers.Levels.LevelDef;
 import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.LevelManager.IStatusListener;
 import com.pandeagames.www.gutterballredux.utils.JSON;
 
@@ -21,17 +22,10 @@ public class AppleLevelManager extends LevelManager {
 	private int[] costs;
 	public static final String LEVEL_UI_STATES = "levelUiStates";
 	private SharedPreferences levelUIStates;
-	private List<AppleLevelDef> levelDefs;
 	public AppleLevelManager(Context context, int numLevels, int[] costs) {
 		super(context, numLevels);
 
 		this.costs=costs;
-
-		if(getLevelsUnlocked()==0){
-			unlockLevel(R.id.thwomp);
-			unlockLevel(R.id.robotdancelevel);
-			unlockLevel(R.id.hiddendragonlevel);
-		}
 
 		levelUIStates = context.getSharedPreferences(LEVEL_UI_STATES, 0);
 
@@ -40,20 +34,22 @@ public class AppleLevelManager extends LevelManager {
 	public SharedPreferences getLevelUiStates(){
 		return levelUIStates;
 	}
-	public void completeLevel(int levelIndex){
-		super.completeLevel(levelIndex);
-		for(int i=0;i<getNumLevels();i++){
-			if(getStatus(i)==STATUS_LOCKED){
-				if(getAppleCount()>=costs[i]){
-					unlockLevel(i);
-					markForUnlock(i, true);
+	public void completeLevel(String id){
+		super.completeLevel(id);
+		for(int i=0;i<levelDefs.size();i++){
+			AppleLevelDef levelDef = (AppleLevelDef)levelDefs.get(i);
+			if(getStatus(levelDef.getId())==STATUS_LOCKED){
+				if(getAppleCount()>=levelDef.getAppleLockCount()){
+					unlockLevel(levelDef.getId());
+					markForUnlock(levelDef.getId(), true);
 				}
 			}
 		}
 	}
-	public void markForUnlock(int levelIndex, boolean status){
+
+	public void markForUnlock(String id, boolean status){
 		SharedPreferences.Editor editor = levelUIStates.edit();
-		editor.putBoolean(Integer.toString(levelIndex), status);
+		editor.putBoolean(id, status);
 		editor.commit();
 	}
 	public int getAppleCount(){
@@ -72,13 +68,10 @@ public class AppleLevelManager extends LevelManager {
 	}
 	public void reset(){
 		super.reset();
-		unlockLevel(0);
-		unlockLevel(1);
-		unlockLevel(2);
 	}
 	/* Given the asset id of a JSON file, this method will read the contents of the file and output a list of level definitions.  */
-	private List<AppleLevelDef> parseLevelData(int asset){
-		ArrayList<AppleLevelDef> list = new ArrayList<AppleLevelDef>();
+	private List<LevelDef> parseLevelData(int asset){
+		ArrayList<LevelDef> list = new ArrayList<LevelDef>();
 
 		try {
 

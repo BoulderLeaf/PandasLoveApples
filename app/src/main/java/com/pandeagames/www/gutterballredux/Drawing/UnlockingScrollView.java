@@ -63,7 +63,7 @@ public class UnlockingScrollView extends ScrollView {
 				
 					pb.doUnlockAnim();
 					
-					((AppleLevelManager)((GutterBallApp)getContext().getApplicationContext()).getLevelManager()).markForUnlock(photoButtonList.indexOf(pb), false);
+					((AppleLevelManager)((GutterBallApp)getContext().getApplicationContext()).getLevelManager()).markForUnlock(pb.levelDef.getId(), false);
 				}
 			}
 		}
