@@ -33,7 +33,9 @@ public class GameView extends SurfaceView {
 		return true;
 
 	}
-
+	public float getRatio() {
+		return ratio;
+	}
 	public float toWorldX(float value) {
 		return (value + horizontalOffset) / ratio;
 	}

@@ -7,6 +7,7 @@ import org.jbox2d.dynamics.Body;
 
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameObjects.Actor;
+import com.pandeagames.www.gutterballredux.gameObjects.Trail;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import android.content.DialogInterface;
@@ -192,6 +193,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		STATE=IDLE;
 		//Spawn Actor
 		Actor actor = new Actor(game, new Vec2(getX(), getY()));
+		Trail trail = new Trail(game, actor);
 		//Launch Actor
 		float dx  = gameView.toWorld(fingX)-getX();
 		float dy  = gameView.toWorld(fingY)-getY();
