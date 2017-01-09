@@ -23,11 +23,14 @@ public class Trail extends DrawableGameComponent implements IBodyCreationListene
     private BodyComponent attached;
     private float[] x, y;
     private int[] a;
+    private float lineWidth;
     private long[] t;
     private Paint paint;
-    private int time, step, timeStep, size;
+    private int time, step, timeStep, size, lifetime;
     private Path path;
+    private long currentTime;
     private boolean bodyCreated;
+
 
     public Trail(Game game, BodyComponent attached){
         this(game, attached, 1500);
@@ -46,8 +49,11 @@ public class Trail extends DrawableGameComponent implements IBodyCreationListene
         a = new int[size];
         t = new long[size];
 
+        lifetime = 2500;
+        lineWidth = 0.3f;
+
         paint  = new Paint();
-        paint.setARGB(255,255, 248, 206);
+        paint.setARGB(255,255, 248, 255);
 
         path = new Path();
 
@@ -71,7 +77,10 @@ public class Trail extends DrawableGameComponent implements IBodyCreationListene
 
            // path.lineTo(gameView.toScreenX(attached.getX()), gameView.toScreenY(attached.getY()));
         }
-        if(step == size){
+
+        currentTime = info.getTime();
+
+        if(info.getTime() - t[step-1] > lifetime){
             this.markDestroy();
         }
     }
@@ -83,17 +92,47 @@ public class Trail extends DrawableGameComponent implements IBodyCreationListene
             return;
         }
         int i = 0;
-        path.moveTo(gameView.toScreenX(x[0]), gameView.toScreenY(y[0]));
-        paint.setAlpha((int)(100f * (1f - (float)((float)step / (float)size))));
+        float dx, dy, r, dt;
+        double a, cos, sin;
+        boolean moved = false;
 
-        for( i = 0; i < step; i++)
+        for( i = 1; i < step; i++)
         {
-            path.lineTo(gameView.toScreenX(x[i]+0.2), gameView.toScreenY(y[i]));
+            r = (1 - (float)(currentTime - t[i]) / (float) lifetime) * lineWidth;
+
+            if(r<0.05)
+            {
+                continue;
+            }else if(!moved){
+                path.moveTo(gameView.toScreenX(x[i]), gameView.toScreenY(y[i]));
+                moved = true;
+                continue;
+            }
+
+            dx = x[i] - x[i-1];
+            dy = y[i] - y[i-1];
+            a = Math.atan2(dy, dx) - Math.PI / 2;
+            cos = Math.cos(a) * r;
+            sin = Math.sin(a) * r;
+
+            path.lineTo(gameView.toScreenX(x[i]+cos), gameView.toScreenY(y[i]+sin));
         }
-        for( i = step-1; i >= 0; i--)
+
+        for( i = step -1; i > 0; i--)
         {
-            path.lineTo(gameView.toScreenX(x[i]-0.2), gameView.toScreenY(y[i]));
+            r = (1 - (float)(currentTime - t[i]) / (float) lifetime) * lineWidth;
+
+            if(r<0.05) continue;
+
+            dx = x[i] - x[i-1];
+            dy = y[i] - y[i-1];
+            a = Math.atan2(dy, dx) + Math.PI / 2;
+            cos = Math.cos(a) * r;
+            sin = Math.sin(a) * r;
+
+            path.lineTo(gameView.toScreenX(x[i]+cos), gameView.toScreenY(y[i]+sin));
         }
+
         info.getCanvas().drawPath(path, paint);
     }
     @Override
