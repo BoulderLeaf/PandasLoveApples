@@ -13,7 +13,7 @@ import java.io.InputStream;
  */
 
 public class JSON {
-    public static String loadJSONFromAsset(Resources resources, int asset) {
+    public static String loadJSONFromResource(Resources resources, int asset) {
         String json = null;
         try {
             InputStream is = resources.openRawResource(asset);
@@ -26,6 +26,22 @@ public class JSON {
             ex.printStackTrace();
             return null;
         }
+        return json;
+    }
+    public static String loadJSONFromAsset(AssetManager assets, String asset) {
+        String json;
+        try {
+            InputStream is = assets.open(asset);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
         return json;
     }
 }

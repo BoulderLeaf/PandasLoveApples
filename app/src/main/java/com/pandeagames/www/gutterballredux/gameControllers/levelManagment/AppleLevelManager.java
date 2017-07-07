@@ -14,8 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class AppleLevelManager extends LevelManager {
@@ -29,7 +32,7 @@ public class AppleLevelManager extends LevelManager {
 
 		levelUIStates = context.getSharedPreferences(LEVEL_UI_STATES, 0);
 
-		levelDefs = parseLevelData(R.raw.levels_def);
+		levelDefs = parseLevelFromAsset("levels.json");
 	}
 	public SharedPreferences getLevelUiStates(){
 		return levelUIStates;
@@ -66,42 +69,58 @@ public class AppleLevelManager extends LevelManager {
 		editor.putInt("apples", count);
 		editor.commit();
 	}
-	public void reset(){
-		super.reset();
-	}
+
 	/* Given the asset id of a JSON file, this method will read the contents of the file and output a list of level definitions.  */
-	private List<LevelDef> parseLevelData(int asset){
-		ArrayList<LevelDef> list = new ArrayList<LevelDef>();
+	private List<LevelDef> parseLevelFromRaw(int asset){
 
 		try {
+			return this.parseLevelJSON(new JSONObject(JSON.loadJSONFromResource(context.getResources(), asset)));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-			JSONObject obj = new JSONObject(JSON.loadJSONFromAsset(context.getResources(), asset));
-			JSONArray levels = obj.getJSONArray("levels");
+	/* Given the asset id of a JSON file, this method will read the contents of the file and output a list of level definitions.  */
+	private List<LevelDef> parseLevelFromAsset(String filename){
 
+		try {
+			return this.parseLevelJSON(new JSONObject(JSON.loadJSONFromAsset(context.getAssets(), filename)));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/* Given the asset id of a JSON file, this method will read the contents of the file and output a list of level definitions.  */
+	private List<LevelDef> parseLevelJSON(JSONObject json) {
+		ArrayList<LevelDef> list = new ArrayList<LevelDef>();
+		try {
+			Iterator keys = json.keys();
 			JSONObject level;
 			String id;
 			int name, bg, bg_mini, bg_mini_locked, bg_mini_unplayed;
 
-			for(int i =0; i < levels.length(); i++){
+			while(keys.hasNext()){
+				id = String.valueOf(keys.next());
+				level = json.getJSONObject(id);
 
-				level = levels.getJSONObject(i);
-				id = level.getString("id");
+					bg = context.getResources().getIdentifier(id + "_bg", "drawable", context.getPackageName());
+					bg_mini = context.getResources().getIdentifier(id + "_bg_mini", "drawable", context.getPackageName());
+					bg_mini_locked = context.getResources().getIdentifier(id + "_bg_mini_locked", "drawable", context.getPackageName());
+					bg_mini_unplayed = context.getResources().getIdentifier(id + "_bg_mini_unplayed", "drawable", context.getPackageName());
 
-				name = context.getResources().getIdentifier(id, "string", context.getPackageName());
-				bg = context.getResources().getIdentifier(id+"_bg", "drawable", context.getPackageName());
-				bg_mini = context.getResources().getIdentifier(id+"_bg_mini", "drawable", context.getPackageName());
-				bg_mini_locked = context.getResources().getIdentifier(id+"_bg_mini_locked", "drawable", context.getPackageName());
-				bg_mini_unplayed = context.getResources().getIdentifier(id+"_bg_mini_unplayed", "drawable", context.getPackageName());
+					list.add(new AppleLevelDef(
+							id,
+							R.string.level_name_default,
+							level.getInt("appleCount"),
+							bg == 0 ? R.drawable.background_01 : bg,
+							bg_mini == 0 ? R.drawable.background : bg_mini,
+							bg_mini_locked == 0 ? R.drawable.disabled_level : bg_mini_locked,
+							bg_mini_unplayed == 0 ? R.drawable.unlocked_level : bg_mini_unplayed
+					));
 
-				list.add(new AppleLevelDef(
-						level.getString("id"),
-						name == 0 ? R.string.level_name_default:name,
-						level.getInt("appleCount"),
-						bg == 0 ? R.drawable.background_01:bg,
-						bg_mini == 0 ? R.drawable.background:bg_mini,
-						bg_mini_locked == 0 ? R.drawable.disabled_level:bg_mini_locked,
-						bg_mini_unplayed == 0 ? R.drawable.unlocked_level:bg_mini_unplayed
-				));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -109,5 +128,4 @@ public class AppleLevelManager extends LevelManager {
 
 		return list;
 	}
-
 }

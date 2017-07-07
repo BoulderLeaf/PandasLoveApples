@@ -15,19 +15,18 @@ import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import com.pandeagames.www.gutterballredux.Components.AbstractGameComponent;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
-public class Level extends AbstractGameComponent{
+public class Level extends GeneratedLevel{
 	private BodyComponent geometry;
 	private Background bg;
 	private Portal portal;
 	private BottomCuller culler;
 	private CullShaftRenderer cullRenderer;
 	private GravityShift gShift;
-	protected LevelDef levelDef;
+
 
 public Level(Game game, BodyComponent geometry, LevelDef levelDef){
-	super(game);
+	super(game, levelDef);
 	this.geometry=geometry;
-	this.levelDef = levelDef;
 	bg  = new Background(game, ((AppleLevelDef)levelDef).getBgResId());
 	generateCuller(game);
 	gShift = new GravityShift(game);

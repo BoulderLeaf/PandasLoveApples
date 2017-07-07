@@ -42,7 +42,25 @@ private IObtainedCallback obtainedCallback;
 
 		//choose artwork for apple based on apple type.
 		if(type == AppleType.NORMAL){
-			sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.green_sphere);
+			int ran = (int)(Math.random() * 5);
+			switch(ran){
+				case 0:
+					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.green_sphere);
+					break;
+				case 1:
+					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_01);
+					break;
+				case 2:
+					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_03);
+					break;
+				case 3:
+					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_04);
+					break;
+				case 4:
+					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_05);
+					break;
+			}
+
 		}
 		else
 		{
@@ -58,10 +76,10 @@ private IObtainedCallback obtainedCallback;
 
 		Rect des = new Rect();
 		des.set((int)gameView.toScreenX(x-r), 
-				(int)gameView.toScreenY(y-r),
+				(int)gameView.toScreenY((y-1.1875f)),
 				(int)gameView.toScreenX(x+r),
 				(int)gameView.toScreenY(y+r));
-		
+
 		sphere.setBounds(des);
 		sphere.draw(info.getCanvas());
 	}
