@@ -24,6 +24,9 @@ private RadialCollider collider;
 private Floater floater;
 	private AppleType type;
 private IObtainedCallback obtainedCallback;
+	public Portal(Game activity, AppleType type) {
+		this(activity, 0, 0, type);
+	}
 	public Portal(Game activity, float x, float y, AppleType type) {
 		super(activity);
 		setPos(x, y);

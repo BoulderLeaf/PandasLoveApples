@@ -19,6 +19,9 @@ public class Breakable extends BodyComponent {
     private boolean queueBreak = false, queueCollide = false;
     private BodyComponent queudBody = null;
     protected Vec2 collideVelocity;
+    public Breakable(Game game) {
+        this(game, new Vec2(0, 0));
+    }
     public Breakable(Game game, Vec2 pos){
         super(game);
         bodyDef.position.set(pos);

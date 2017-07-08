@@ -19,6 +19,11 @@ import org.jbox2d.dynamics.Body;
  */
 
 public class BreakableBlockSmall extends BreakableBlock {
+
+    public BreakableBlockSmall(Game game) {
+        this(game, new Vec2());
+    }
+
     public BreakableBlockSmall(Game game, Vec2 pos){
         super(game, pos);
 

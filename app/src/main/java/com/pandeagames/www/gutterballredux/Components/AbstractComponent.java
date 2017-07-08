@@ -12,6 +12,8 @@ public abstract class AbstractComponent {
 	protected SurfaceView view;
 	private float x=0;
 	private float y=0;
+	private float width=0;
+	private float height=0;
 	private boolean markedDestroy;
 	private Point pt;
 	private boolean enabled=true;
@@ -50,7 +52,27 @@ public abstract class AbstractComponent {
 	public Point getPt(){
 		return pt;
 	}
-	
+
+	/////////////////////// Component Dimensions ///////////////////////
+
+	public void setWidth(float value){
+		width=value;
+	}
+	public void setHeight(float value){
+		height=value;
+	}
+	public void setDimensions(float width, float height){
+		setWidth(width);
+		setHeight(height);
+	}
+	public float getWidth(){
+		return width;
+	}
+	public float getHeight()
+	{
+		return height;
+	}
+
 	/////////////////////// Component Destruction ///////////////////////
 	public void destroy() {
 		activity.removeComponent(this);

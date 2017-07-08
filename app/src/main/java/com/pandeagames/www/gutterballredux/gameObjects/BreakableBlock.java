@@ -31,6 +31,10 @@ public class BreakableBlock extends Breakable {
     protected float radiusMod = 0.2f;
     private Paint paint;
 
+    public BreakableBlock(Game game) {
+        this(game, new Vec2(0, 0));
+    }
+
     public BreakableBlock(Game game, Vec2 pos){
         super(game, pos);
 

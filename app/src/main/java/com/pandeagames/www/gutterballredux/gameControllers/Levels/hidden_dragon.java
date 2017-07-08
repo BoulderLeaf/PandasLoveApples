@@ -12,16 +12,8 @@ public class hidden_dragon extends ThrowLevel {
 	public hidden_dragon(Game game, BodyComponent geometry, LevelDef levelDef)
 	{
 		super(game, geometry,levelDef);
-		// TODO Auto-generated constructor stub
-		createPortal(8, 3);
-		createPortal(16, 3);
-		createPortal(24, 3);
-		createPortal(3, 8);
-		createPortal(16, 18);
-		createPortal(21, 24);
 		
 		//forground=new Forground(game, R.drawable.hiddendragon_forground, 200,false);
-
 	}
 
 	public hidden_dragon(Game game, LevelDef levelDef) {

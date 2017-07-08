@@ -19,6 +19,10 @@ import org.jbox2d.dynamics.Body;
 
 public class BreakableBlockLarge extends BreakableBlock {
 
+    public BreakableBlockLarge(Game game) {
+        this(game, new Vec2(0, 0));
+    }
+
     public BreakableBlockLarge(Game game, Vec2 pos){
         super(game, pos);
         this.health = 3;
