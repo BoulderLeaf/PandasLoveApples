@@ -5,6 +5,7 @@ import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameObjects.Background;
 import com.pandeagames.www.gutterballredux.gameObjects.GameObjectUtils;
+import com.pandeagames.www.gutterballredux.gameObjects.ObjectGroup;
 import com.pandeagames.www.gutterballredux.utils.JSON;
 
 import org.json.JSONArray;
@@ -34,14 +35,23 @@ public class GeneratedLevel extends AbstractGameComponent {
             this._levelJSON = new JSONObject(JSON.loadJSONFromAsset(game.getAssets(),"levels/" + levelDef.getId()+".json"));
 
             JSONArray objects = this._levelJSON.getJSONArray("objects");
-            JSONObject object = null;
+            JSONObject instance = null;
             AbstractGameComponent gameComponent = null;
+
+            JSONObject objectsDefs = new JSONObject(JSON.loadJSONFromAsset(game.getAssets(),"creatorObjects.json"));
+            JSONObject prefab, params, group;
 
             for(int i = 0; i<objects.length(); i++)
             {
-                object = (JSONObject)objects.get(i);
-                gameComponent = GameObjectUtils.parseGameObjectFromJSON(game, object);
-                this.initializeGameComponent(gameComponent, object);
+                instance= (JSONObject)objects.get(i);
+                prefab = objectsDefs.getJSONObject(instance.getString("objectId"));
+                params = prefab.getJSONObject("params");
+                group = params.getJSONObject("group");
+
+                if(group.getInt("value") == ObjectGroup.OBJECT.value()) {
+                    gameComponent = GameObjectUtils.parseGameObjectFromJSON(game, instance);
+                    this.initializeGameComponent(gameComponent, instance);
+                }
             }
 
         } catch (JSONException e) {
