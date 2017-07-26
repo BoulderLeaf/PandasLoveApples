@@ -1,6 +1,8 @@
-package com.pandeagames.www.gutterballredux.gameObjects;
+package com.pandeagames.www.gutterballredux.gameObjects.scripts;
 
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
+import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
+import com.pandeagames.www.gutterballredux.gameObjects.Portal;
 
 import org.json.JSONObject;
 

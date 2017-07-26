@@ -10,10 +10,10 @@ public abstract class AbstractComponent {
 	private boolean destroyed;
 	protected SwingActivity activity;
 	protected SurfaceView view;
-	private float x=0;
-	private float y=0;
-	private float width=0;
-	private float height=0;
+	protected float x=0;
+	protected float y=0;
+	protected float width=0;
+	protected float height=0;
 	private boolean markedDestroy;
 	private Point pt;
 	private boolean enabled=true;

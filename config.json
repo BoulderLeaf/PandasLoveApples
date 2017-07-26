@@ -1,0 +1,17 @@
+{
+	"dataRoot":"app/src/main/assets/",
+	"ref":"heads/master",
+	"branch":"refs/heads/master",
+	"cdn":"https://www.pandeagames.com/makingapplescdn/",
+
+	"github":{
+		"userName":"PandeaGames",
+		"token":"814be36f999e4ff0544eeecdb7603622b67135ae",
+		"repo":"PandasLoveApples",
+		"owner":"PandeaGamesOrganization"
+	},
+	
+	"fabric":{
+		"backgroundColor":"#ffffff"
+	}
+}

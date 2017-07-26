@@ -1,13 +1,10 @@
 package com.pandeagames.www.gutterballredux.gameControllers.Levels;
 
-import com.pandeagames.R;
-
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
-import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.ThwompGeom;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.TunnelGeom;
 import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
-import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockMedium;
-import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockSmall;
+import com.pandeagames.www.gutterballredux.gameObjects.scripts.BreakableBushMedium;
+import com.pandeagames.www.gutterballredux.gameObjects.scripts.BreakableBushSmall;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
 import org.jbox2d.common.Vec2;
@@ -75,19 +72,19 @@ public class tunnel extends ThrowLevel {
         createPortal(1.5f, 19.5f);
 
 
-       // addBreakable(new BreakableBlockMedium(game, new Vec2(6.5f, 33f)));
-        addBreakable(new BreakableBlockMedium(game, new Vec2(3f, 33f)));
-        addBreakable(new BreakableBlockMedium(game, new Vec2(6f, 21f)));
-       // addBreakable(new BreakableBlockMedium(game, new Vec2(3f, 21f)));
-        addBreakable(new BreakableBlockMedium(game, new Vec2(6f, 9f)));
+       // addBreakable(new BreakableBushMedium(game, new Vec2(6.5f, 33f)));
+        addBreakable(new BreakableBushMedium(game, new Vec2(3f, 33f)));
+        addBreakable(new BreakableBushMedium(game, new Vec2(6f, 21f)));
+       // addBreakable(new BreakableBushMedium(game, new Vec2(3f, 21f)));
+        addBreakable(new BreakableBushMedium(game, new Vec2(6f, 9f)));
 
-        addBreakable(new BreakableBlockSmall(game, new Vec2(7.5f, 34.5f)));
-        addBreakable(new BreakableBlockSmall(game, new Vec2(7.5f, 31.5f)));
-        addBreakable(new BreakableBlockSmall(game, new Vec2(7.5f, 28.5f)));
-        addBreakable(new BreakableBlockSmall(game, new Vec2(7.5f, 25.5f)));
+        addBreakable(new BreakableBushSmall(game, new Vec2(7.5f, 34.5f)));
+        addBreakable(new BreakableBushSmall(game, new Vec2(7.5f, 31.5f)));
+        addBreakable(new BreakableBushSmall(game, new Vec2(7.5f, 28.5f)));
+        addBreakable(new BreakableBushSmall(game, new Vec2(7.5f, 25.5f)));
 
-        addBreakable(new BreakableBlockSmall(game, new Vec2(7.5f, 13.5f)));
-        addBreakable(new BreakableBlockSmall(game, new Vec2(7.5f, 16.5f)));
+        addBreakable(new BreakableBushSmall(game, new Vec2(7.5f, 13.5f)));
+        addBreakable(new BreakableBushSmall(game, new Vec2(7.5f, 16.5f)));
     }
 
     public tunnel(Game game, LevelDef levelDef) {

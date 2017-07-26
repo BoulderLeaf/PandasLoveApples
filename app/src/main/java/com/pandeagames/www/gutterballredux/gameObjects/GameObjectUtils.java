@@ -19,11 +19,13 @@ import java.lang.reflect.InvocationTargetException;
 
 public class GameObjectUtils
 {
+    private static String SCRIPTS_PACKAGE = "com.pandeagames.www.gutterballredux.gameObjects.scripts";
+
     public static AbstractGameComponent parseGameObjectFromID(Game game, String id){
         AbstractGameComponent object = null;
 
         try{
-            Class<?> clazz = Class.forName("com.pandeagames.www.gutterballredux.gameObjects."+id);
+            Class<?> clazz = Class.forName(SCRIPTS_PACKAGE + "." + id);
             Constructor<?> constructor = clazz.getConstructor(Game.class, JSONObject.class);
             object = (AbstractGameComponent) constructor.newInstance(game);
         }catch(IllegalAccessException ex){
@@ -62,7 +64,7 @@ public class GameObjectUtils
         }
 
         try{
-            Class<?> clazz = Class.forName("com.pandeagames.www.gutterballredux.gameObjects."+id);
+            Class<?> clazz = Class.forName(SCRIPTS_PACKAGE + "." + id);
             Constructor<?> constructor = clazz.getConstructor(Game.class, JSONObject.class);
             object = (AbstractGameComponent) constructor.newInstance(game, objectJSON);
         }catch(IllegalAccessException ex){
@@ -90,15 +92,15 @@ public class GameObjectUtils
         float x = 0, y = 0, width = 0, height = 0;
 
         try {
-            x = objectJSON.getInt("x");
-            y = objectJSON.getInt("y");
-            width = objectJSON.getInt("width");
-            height = objectJSON.getInt("height");
+            x = (float)objectJSON.getDouble("x");
+            y =(float) objectJSON.getDouble("y");
+            width = (float)objectJSON.getDouble("width");
+            height = (float)objectJSON.getDouble("height");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        gameObject.setPos(x, y);
+        gameObject.setPos(x + width / 2, y+ height / 2);
         gameObject.setDimensions(width, height);
     }
 }

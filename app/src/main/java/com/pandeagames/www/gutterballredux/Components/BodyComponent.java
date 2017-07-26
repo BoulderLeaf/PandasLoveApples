@@ -130,6 +130,18 @@ public void emitBodyTouch(MotionEvent event){
 		}
 	}
 
+	@Override
+	public void setX(float value){
+		super.setX(value);
+		bodyDef.position.set(new Vec2(this.x, this.y));
+	}
+
+	@Override
+	public void setY(float value){
+		super.setY(value);
+		bodyDef.position.set(new Vec2(this.x, this.y));
+	}
+
 	public double getVelocity(){
 		Vec2 d = body.getLinearVelocity();
 		return Math.sqrt(d.x * d.x + d.y * d.y);

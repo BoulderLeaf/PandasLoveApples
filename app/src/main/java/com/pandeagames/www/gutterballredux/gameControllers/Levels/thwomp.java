@@ -1,11 +1,9 @@
 package com.pandeagames.www.gutterballredux.gameControllers.Levels;
 
-import com.pandeagames.R;
-
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.ThwompGeom;
 import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
-import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlockSmall;
+import com.pandeagames.www.gutterballredux.gameObjects.scripts.BreakableBushSmall;
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 
 import org.jbox2d.common.Vec2;
@@ -46,8 +44,8 @@ public class thwomp extends ThrowLevel {
 		createPortal(1.5f, 25.5f);
 		createPortal(1.5f, 28.5f);
 
-		addBreakable(new BreakableBlockSmall(game, new Vec2(1.5f, 20.5f)));
-		addBreakable(new BreakableBlockSmall(game, new Vec2(22.5f, 20.5f)));
+		addBreakable(new BreakableBushSmall(game, new Vec2(1.5f, 20.5f)));
+		addBreakable(new BreakableBushSmall(game, new Vec2(22.5f, 20.5f)));
 	}
 
 	public thwomp(Game game, LevelDef levelDef) {

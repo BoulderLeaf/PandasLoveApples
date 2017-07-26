@@ -55,10 +55,10 @@ public class GeneratedGeom extends LevelWalls {
                 group = params.getJSONObject("group");
                 fabricObjectType = params.getJSONObject("fabricObjectType");
 
-                x = instance.getInt("x");
-                y = instance.getInt("y");
-                width = instance.getInt("width");
-                height = instance.getInt("height");
+                x = (float)instance.getDouble("x");
+                y = (float)instance.getDouble("y");
+                width = (float)instance.getDouble("width");
+                height = (float)instance.getDouble("height");
 
                 if(group.getInt("value") != ObjectGroup.GEOM.value()) {continue;}
 
@@ -72,7 +72,7 @@ public class GeneratedGeom extends LevelWalls {
                     case RECT:
 
                         groundBox = new PolygonShape();
-                        groundBox.setAsBox(width / 2, height / 2, new Vec2(x, y), 0.0f);
+                        groundBox.setAsBox(width / 2, height / 2, new Vec2(x + width / 2, y + height / 2), 0.0f);
                         body.createFixture(groundBox, 0.0f);
 
                         break;
