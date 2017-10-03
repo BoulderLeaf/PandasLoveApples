@@ -38,7 +38,7 @@ public class GameThread extends DrawThread {
 			
 		}
 		updateList.clearBuffer();
-		drawList.clearBuffer();
+		drawList.clearRemoveBuffer();
 		super.tick(tickInfo);
 		for(AbstractGameComponent comp : updateList){
 			if(comp.getMarkDestroy()){

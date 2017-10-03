@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
-import com.pandeagames.www.gutterballredux.gameControllers.SpawnActors;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.LevelWalls;
 import com.pandeagames.www.gutterballredux.gameObjects.Actor;
 import com.pandeagames.www.gutterballredux.gameObjects.Background;

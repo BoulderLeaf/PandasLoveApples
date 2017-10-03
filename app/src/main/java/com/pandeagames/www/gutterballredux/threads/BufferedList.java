@@ -20,6 +20,11 @@ public class BufferedList<E> extends ArrayList<E> {
 		addBuffer = new ArrayList<E>();
 		removeBuffer = new ArrayList<E>();
 	}
+
+	public boolean hasBuffer()
+	{
+		return addBuffer.size() != 0 || removeBuffer.size() != 0;
+	}
 	@Override
 public boolean add(E object)
 	{
@@ -33,11 +38,18 @@ public boolean add(E object)
 		return true;
 	}
 	public void clearBuffer(){
-		ArrayList<E> testList=this;
 		super.addAll(addBuffer);
 		super.removeAll(removeBuffer);
 		addBuffer.clear();
 		removeBuffer.clear();
+	}
+	public void clearRemoveBuffer(){
+		super.removeAll(removeBuffer);
+		removeBuffer.clear();
+	}
+	public void clearAddBuffer(){
+		super.addAll(addBuffer);
+		addBuffer.clear();
 	}
 @Override
 public boolean addAll(Collection<? extends E> collection){

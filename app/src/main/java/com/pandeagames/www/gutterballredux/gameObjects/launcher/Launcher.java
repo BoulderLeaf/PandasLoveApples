@@ -9,6 +9,7 @@ import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameObjects.Actor;
 import com.pandeagames.www.gutterballredux.gameObjects.Trail;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
+import com.pandeagames.www.gutterballredux.infoHolders.StageScore;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import android.content.DialogInterface;
 import android.graphics.Paint;
@@ -39,6 +40,8 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	private double maxStrength = 28;
 	private double baseStrength = 5;
 
+	private StageScore _score;
+
 	private long lastLaunchTime=0;
 	private boolean enabled=true;
 	//list of launcher listeners
@@ -51,7 +54,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	public double a, cos, sin;
 	public int d;
 	public float  dx, dy;
-	public Launcher(Game activity, float x, float y) {
+	public Launcher(Game activity, StageScore score, float x, float y) {
 		super(activity);
 		// TODO Auto-generated constructor stub
 		setPos(x, y);
@@ -61,6 +64,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		paint.setARGB(255,255, 248, 206);
 		pullPaint.setARGB(255, 253, 252, 241);
 		pullPaint.setStrokeWidth(3);
+		_score = score;
 		activity.addInputComponent(this);
 		
 		launcherListeners=new ArrayList<ILauncherListener>();
@@ -192,7 +196,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		if(!enabled){return;}
 		STATE=IDLE;
 		//Spawn Actor
-		Actor actor = new Actor(game, new Vec2(getX(), getY()));
+		Actor actor = new Actor(game, new Vec2(getX(), getY()), _score.getComboToken());
 		Trail trail = new Trail(game, actor);
 		//Launch Actor
 		float dx  = gameView.toWorld(fingX)-getX();

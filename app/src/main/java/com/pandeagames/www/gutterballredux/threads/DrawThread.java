@@ -59,25 +59,27 @@ public void setHolder(SurfaceHolder holder){
 		// TODO Auto-generated method stub
 		if(view!=null){
 		holder= view.getHolder();
-		if(holder!=null){
-			
-	
-		Canvas c = view.getHolder().lockCanvas();
-	
-		if(c!=null)
-		{
-			DrawInfo info = new DrawInfo(c, activity.getScreenSize(), activity.getScaler());
-			for(IDrawableComponent comp : drawList)
-			{
-				comp.draw(info);
+		if(holder!=null) {
+
+
+			Canvas c = view.getHolder().lockCanvas();
+
+			if (c != null) {
+				DrawInfo info = new DrawInfo(c, activity.getScreenSize(), activity.getScaler());
+				for (IDrawableComponent comp : drawList) {
+					comp.draw(info);
+				}
+
+				view.getHolder().unlockCanvasAndPost(c);
 			}
-			
-			view.getHolder().unlockCanvasAndPost(c);
-			}
-				
+
+			boolean hasBuffer = drawList.hasBuffer();
 			drawList.clearBuffer();
-			Collections.sort(drawList, IDrawableComponent.drawableComparator);
+
+			if (hasBuffer) {
+				Collections.sort(drawList, IDrawableComponent.drawableComparator);
 			}
+		}
 		}
 	}
 }

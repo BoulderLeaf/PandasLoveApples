@@ -30,7 +30,8 @@ public class Actor extends BodyComponent implements IRadialCollider{
 	private Tail tail;
 	private AnimalBody aBody;
 	private Head head;
-	public Actor(Game game, Vec2 pos) {
+	private int _comboToken;
+	public Actor(Game game, Vec2 pos, int comboToken) {
 		super(game);
 		this.pos=pos;
 		 bodyDef.type=BodyType.DYNAMIC;
@@ -95,6 +96,10 @@ public class Actor extends BodyComponent implements IRadialCollider{
 		tail=null;
 		pos=null;
 		super.destroy();
+	}
+
+	public int getComboToken(){
+		return _comboToken;
 	}
 
 }

@@ -82,7 +82,7 @@ public class Head extends DrawableGameComponent {
 		
 	}
 	public int drawOrder(){
-		return 300;
+		return 202;
 	}
 	private void drawNode(DrawInfo drawInfo,JointNode node){
 		if(node!=null){

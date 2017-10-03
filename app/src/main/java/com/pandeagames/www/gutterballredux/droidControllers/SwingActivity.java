@@ -164,8 +164,15 @@ public class SwingActivity extends Activity implements SurfaceHolder.Callback,
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
-		
+
+		if(inputList == null){
+			return false;
+		}
+
 		for (IUserInputComponent comp : inputList) {
+			if(comp == null){
+				comp = null;
+			}
 			comp.onTouch(v, event);
 		}
 		inputList.clearBuffer();

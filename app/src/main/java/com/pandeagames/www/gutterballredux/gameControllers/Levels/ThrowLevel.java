@@ -3,15 +3,26 @@ package com.pandeagames.www.gutterballredux.gameControllers.Levels;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pandeagames.R;
+import com.pandeagames.www.gutterballredux.Components.AbstractGameComponent;
 import com.pandeagames.www.gutterballredux.droidControllers.GutterBallApp;
 
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.AppleLevelManager;
+import com.pandeagames.www.gutterballredux.gameObjects.Actor;
 import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
 import com.pandeagames.www.gutterballredux.gameObjects.Breakable;
+import com.pandeagames.www.gutterballredux.gameObjects.EndLevelDialog;
+import com.pandeagames.www.gutterballredux.gameObjects.GameObjectUtils;
 import com.pandeagames.www.gutterballredux.gameObjects.HitSparks;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal.IObtainedCallback;
@@ -19,8 +30,13 @@ import com.pandeagames.www.gutterballredux.gameObjects.launcher.FingerAnimation;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.Launcher;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.LauncherAnimation;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.LauncherTouchCircle;
+import com.pandeagames.www.gutterballredux.gameObjects.scripts.apple;
+import com.pandeagames.www.gutterballredux.gameObjects.scripts.golden_apple;
+import com.pandeagames.www.gutterballredux.infoHolders.StageScore;
 
-public abstract class ThrowLevel extends Level implements IObtainedCallback {
+import org.json.JSONObject;
+
+public class ThrowLevel extends Level implements IObtainedCallback {
 protected LauncherTouchCircle launcherCircle;
 protected Launcher launcher;
 protected LauncherAnimation launcherAnim;
@@ -29,12 +45,15 @@ protected List<Portal> portalList;
 protected HitSparks sparks;
 protected GutterBallApp app;
 protected int appleCount=0;
+	private EndLevelDialog endLevelDialog;
+	private StageScore _score;
 	public ThrowLevel(Game game, BodyComponent geometry, LevelDef levelDef) {
 		super(game, geometry, levelDef);
-		initialize();
 	}
-	private void initialize(){
-		launcher = new Launcher(game, 12, 38);
+	@Override
+	protected void init(){
+		_score = new StageScore();
+		launcher = new Launcher(game, _score, 12, 38);
 		launcher.setDelay(1000);
 		portalList =new ArrayList<Portal>();
 		breakableList = new ArrayList<Breakable>();
@@ -43,6 +62,10 @@ protected int appleCount=0;
 		launcherCircle = new LauncherTouchCircle(game, launcher);
 		launcherAnim = new LauncherAnimation(game, launcher);
 		FingerAnimation fa = new FingerAnimation(game, launcher);
+
+		this.endLevelDialog = new EndLevelDialog(game);
+		this.endLevelDialog.displayDialog(10, 5, 4738426, 321563734);
+		super.init();
 	}
 	@Override
 	public void destroy(){
@@ -66,9 +89,10 @@ protected int appleCount=0;
 		launcher=null;
 		super.destroy();
 	}
-	public void portalObtained(Portal portal){
+	public void portalObtained(Portal portal, Actor actor){
 		portalList.remove(portal);
 		game.getSoundPool().play(game.getSoundPool().getPool().squish, 0.99f, 0.99f, 1, 0, 1.0f);
+		_score.addApple(actor.getComboToken(), portal.getType());
 		if(portalList.size()==0){
 			((AppleLevelManager)(game.getGutterApp().getLevelManager())).addApple(appleCount);
 			//have completed the level
@@ -76,6 +100,8 @@ protected int appleCount=0;
 			game.setResult(game.RESULT_OK, null);
 			//finish();
 			game.finish();
+			//this.endLevelDialog = new EndLevelDialog(game);
+
 		}
 	}
 	protected void createPortal(float x, float y)
@@ -90,6 +116,19 @@ protected int appleCount=0;
 		Portal portal = new Portal(game, x, y, type);
 		portal.setCallback(this);
 		portalList.add(portal);
+	}
+
+	@Override
+	protected void initializeGameComponent(AbstractGameComponent gameComponent, JSONObject object)
+	{
+		super.initializeGameComponent(gameComponent, object);
+
+		if(gameComponent instanceof Portal)
+		{
+			appleCount++;
+			((Portal)gameComponent).setCallback(this);
+			portalList.add((Portal)gameComponent);
+		}
 	}
 
 	protected void addBreakable(Breakable breakable)

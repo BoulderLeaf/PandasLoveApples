@@ -30,7 +30,7 @@ public class GeneratedLevel extends AbstractGameComponent {
         this.init();
     }
 
-    private void init(){
+    protected void init(){
         try {
             this._levelJSON = new JSONObject(JSON.loadJSONFromAsset(game.getAssets(),"levels/" + levelDef.getId()+".json"));
 

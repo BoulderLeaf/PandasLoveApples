@@ -88,10 +88,9 @@ private IObtainedCallback obtainedCallback;
 	}
 	@Override
 	public void radialCollide(RadialCollider other) {
-		// TODO Auto-generated method stub
 		if(other.getId()==RadialID.ACTOR)
 		{
-			obtained();
+			obtained((Actor)other.getCollider());
 		}
 	}
 	@Override
@@ -99,10 +98,10 @@ private IObtainedCallback obtainedCallback;
 		collider.destroy();
 	super.destroy();
 	}
-	public void obtained(){
+	public void obtained(Actor actor){
 		if(obtainedCallback!=null)
 		{
-			obtainedCallback.portalObtained(this);
+			obtainedCallback.portalObtained(this, actor);
 		}
 		AppleExplosion e = new AppleExplosion(game, this);
 		e=null;
@@ -116,7 +115,11 @@ private IObtainedCallback obtainedCallback;
 		this.obtainedCallback=callback;
 	}
 
+	public AppleType getType(){
+		return type;
+	}
+
 	public interface IObtainedCallback{
-		public void portalObtained(Portal portal);
+		public void portalObtained(Portal portal, Actor actor);
 	}
 }
