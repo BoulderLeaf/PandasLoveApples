@@ -57,6 +57,15 @@ public class LevelManager {
 		return null;
 	}
 
+	public LevelDef getNextLevel(String id){
+		for(int i =0; i<levelDefs.size()-1; i++){
+			if(levelDefs.get(i).getId().equals(id)){
+				return levelDefs.get(i+1);
+			}
+		}
+		return null;
+	}
+
 	public void setStatus(String id, int status) {
 
 			SharedPreferences.Editor editor = levelPreferences.edit();

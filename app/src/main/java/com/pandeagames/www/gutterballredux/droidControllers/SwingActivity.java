@@ -114,6 +114,12 @@ public class SwingActivity extends Activity implements SurfaceHolder.Callback,
 		componentList.add(component);
 	}
 
+	public void clearComponents() {
+		for(AbstractComponent comp:componentList) {
+			comp.markDestroy();
+		}
+	}
+
 	public void removeComponent(AbstractComponent component) {
 		if(componentList==null)return;
 		componentList.remove(component);

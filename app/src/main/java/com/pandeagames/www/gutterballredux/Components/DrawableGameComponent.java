@@ -39,6 +39,7 @@ public class DrawableGameComponent extends AbstractGameComponent implements
 	}
 	@Override
 public void destroy(){
+		if(destroyed) {return;}
 		game.removeDrawableComponent(this);
 		super.destroy();
 	}

@@ -67,7 +67,9 @@ public void setHolder(SurfaceHolder holder){
 			if (c != null) {
 				DrawInfo info = new DrawInfo(c, activity.getScreenSize(), activity.getScaler());
 				for (IDrawableComponent comp : drawList) {
-					comp.draw(info);
+					if(!comp.destroyed() && !comp.getMarkDestroy()){
+						comp.draw(info);
+					}
 				}
 
 				view.getHolder().unlockCanvasAndPost(c);

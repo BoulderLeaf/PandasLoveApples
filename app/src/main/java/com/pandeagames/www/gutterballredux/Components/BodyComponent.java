@@ -83,6 +83,7 @@ public void createBody(Body body)
 		return body;
 	}
 	public void destroy(){
+		if(destroyed) {return;}
 		game.removeBodyComponent(this);
 		if(body!=null){
 			world.destroyBody(body);

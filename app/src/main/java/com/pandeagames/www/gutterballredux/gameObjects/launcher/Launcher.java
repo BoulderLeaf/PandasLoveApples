@@ -39,6 +39,8 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	private long delay=0;
 	private double maxStrength = 28;
 	private double baseStrength = 5;
+	private ArrayList<Actor> actorList;
+	private ArrayList<Trail> trailList;
 
 	private StageScore _score;
 
@@ -66,6 +68,8 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		pullPaint.setStrokeWidth(3);
 		_score = score;
 		activity.addInputComponent(this);
+		actorList = new ArrayList<Actor>();
+		trailList =  new ArrayList<Trail>();
 		
 		launcherListeners=new ArrayList<ILauncherListener>();
 	}
@@ -197,7 +201,9 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		STATE=IDLE;
 		//Spawn Actor
 		Actor actor = new Actor(game, new Vec2(getX(), getY()), _score.getComboToken());
+		actorList.add(actor);
 		Trail trail = new Trail(game, actor);
+		trailList.add(trail);
 		//Launch Actor
 		float dx  = gameView.toWorld(fingX)-getX();
 		float dy  = gameView.toWorld(fingY)-getY();
@@ -305,12 +311,32 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	}
 	@Override
 	public void destroy(){
-		super.destroy();
+		if(destroyed) {return;}
+
+		for(Actor actor:actorList) {
+			if(!actor.destroyed()){
+				actor.destroy();
+			}
+		}
+
+		for(Trail trail:trailList) {
+			if(!trail.destroyed()){
+				trail.destroy();
+			}
+		}
+
+		actorList.clear();
+		actorList = null;
+
 		paint=null;
 		pullPaint=null;
 		fingerPt=null;
 		launcherListeners.clear();
 		launcherListeners=null;
+
+		activity.removeInputComponent(this);
+
+		super.destroy();
 	}
 
 		private class BodyLauncher implements IBodyCreationListener{

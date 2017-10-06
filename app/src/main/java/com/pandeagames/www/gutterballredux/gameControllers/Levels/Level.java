@@ -17,7 +17,6 @@ import com.pandeagames.www.gutterballredux.Components.BodyComponent;
 public class Level extends GeneratedLevel{
 	private BodyComponent geometry;
 	private Background bg;
-	private Portal portal;
 	private BottomCuller culler;
 	private CullShaftRenderer cullRenderer;
 	private GravityShift gShift;
@@ -46,13 +45,18 @@ public void update(UpdateInfo updateInfo) {
 }
 @Override
 public void destroy(){
+	if(destroyed) {return;}
 	super.destroy();
 	geometry.destroy();
 	bg.destroy();
 	culler.destroy();
-	
+	gShift.destroy();
+	cullRenderer.destroy();
+
 	culler=null;
 	geometry=null;
 	bg=null;
+	gShift = null;
+	cullRenderer = null;
 }
 }

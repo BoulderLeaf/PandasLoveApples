@@ -32,13 +32,12 @@ createBody(world.createBody(bodyDef));
 	
 	@Override
 	public void destroy(){
+		if(destroyed) {return;}
 		super.destroy();
 		for(int i=0;i<walls.length;i++){
 			walls[i].destroy();
 			walls[i]=null;
 		}
 		walls=null;
-		
 	}
-
 }

@@ -36,6 +36,7 @@ public abstract class AbstractGameComponent extends AbstractComponent {
 
 	@Override
 	public void destroy() {
+		if(destroyed) {return;}
 		// TODO Auto-generated method stub
 		game.removeGameComponent(this);
 		game = null;

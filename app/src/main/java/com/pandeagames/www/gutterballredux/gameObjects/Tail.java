@@ -78,7 +78,7 @@ public class Tail extends DrawableGameComponent {
 	}
 	@Override
 	public void destroy(){
-		
+		if(destroyed) {return;}
 		paint=null;
 		comp=null;
 		for(int i=0;i<jointNum;i++){

@@ -33,6 +33,7 @@ public class Actor extends BodyComponent implements IRadialCollider{
 	private int _comboToken;
 	public Actor(Game game, Vec2 pos, int comboToken) {
 		super(game);
+		_comboToken = comboToken;
 		this.pos=pos;
 		 bodyDef.type=BodyType.DYNAMIC;
 	        bodyDef.position.set(pos);
@@ -87,6 +88,7 @@ public class Actor extends BodyComponent implements IRadialCollider{
 	}
 	@Override
 	public void destroy(){
+		if(destroyed) {return;}
 		radialCollider.destroy();
 		tail.destroy();
 		aBody.destroy();

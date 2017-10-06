@@ -7,7 +7,7 @@ import android.graphics.Point;
 import android.view.SurfaceView;
 
 public abstract class AbstractComponent {
-	private boolean destroyed;
+	protected boolean destroyed;
 	protected SwingActivity activity;
 	protected SurfaceView view;
 	protected float x=0;
@@ -77,6 +77,8 @@ public abstract class AbstractComponent {
 	public void destroy() {
 		activity.removeComponent(this);
 		activity=null;
+		view = null;
+		pt = null;
 		destroyed=true;
 	}
 	

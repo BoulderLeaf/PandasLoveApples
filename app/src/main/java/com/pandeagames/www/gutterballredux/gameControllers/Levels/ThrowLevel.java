@@ -21,11 +21,13 @@ import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.AppleL
 import com.pandeagames.www.gutterballredux.gameObjects.Actor;
 import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
 import com.pandeagames.www.gutterballredux.gameObjects.Breakable;
+import com.pandeagames.www.gutterballredux.gameObjects.ComboDisplay;
 import com.pandeagames.www.gutterballredux.gameObjects.EndLevelDialog;
 import com.pandeagames.www.gutterballredux.gameObjects.GameObjectUtils;
 import com.pandeagames.www.gutterballredux.gameObjects.HitSparks;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal.IObtainedCallback;
+import com.pandeagames.www.gutterballredux.gameObjects.ScoreComboUI;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.FingerAnimation;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.Launcher;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.LauncherAnimation;
@@ -46,6 +48,7 @@ protected HitSparks sparks;
 protected GutterBallApp app;
 protected int appleCount=0;
 	private EndLevelDialog endLevelDialog;
+	private ScoreComboUI scoreUI;
 	private StageScore _score;
 	public ThrowLevel(Game game, BodyComponent geometry, LevelDef levelDef) {
 		super(game, geometry, levelDef);
@@ -53,6 +56,10 @@ protected int appleCount=0;
 	@Override
 	protected void init(){
 		_score = new StageScore();
+		_score.setApplePointValue(100);
+		_score.setPar(5);
+		_score.setParValue(500);
+		scoreUI= new ScoreComboUI(game, _score);
 		launcher = new Launcher(game, _score, 12, 38);
 		launcher.setDelay(1000);
 		portalList =new ArrayList<Portal>();
@@ -62,13 +69,11 @@ protected int appleCount=0;
 		launcherCircle = new LauncherTouchCircle(game, launcher);
 		launcherAnim = new LauncherAnimation(game, launcher);
 		FingerAnimation fa = new FingerAnimation(game, launcher);
-
-		this.endLevelDialog = new EndLevelDialog(game);
-		this.endLevelDialog.displayDialog(10, 5, 4738426, 321563734);
 		super.init();
 	}
 	@Override
 	public void destroy(){
+		if(destroyed) {return;}
 		for(Portal p : portalList)
 		{
 			if(!p.destroyed())p.destroy();
@@ -87,21 +92,50 @@ protected int appleCount=0;
 
 		launcher.destroy();
 		launcher=null;
+
+		scoreUI.destroy();
+		scoreUI = null;
+
+		launcherCircle.destroy();
+		launcherCircle = null;
+
+		launcherAnim.destroy();
+		launcherAnim = null;
+
+		sparks.destroy();
+		sparks = null;
+
+		app = null;
+
+		if(endLevelDialog != null)
+		{
+			endLevelDialog.destroy();
+			endLevelDialog = null;
+		}
+
 		super.destroy();
 	}
-	public void portalObtained(Portal portal, Actor actor){
+	public void portalObtained(Portal portal, Actor actor) {
 		portalList.remove(portal);
 		game.getSoundPool().play(game.getSoundPool().getPool().squish, 0.99f, 0.99f, 1, 0, 1.0f);
 		_score.addApple(actor.getComboToken(), portal.getType());
+
+		if(portal.getType() == AppleType.GOLDEN) {
+			ComboDisplay comboDisplay = new ComboDisplay(game, portal.getX(), portal.getY(), _score.getCombo(actor.getComboToken()));
+		}
+
 		if(portalList.size()==0){
 			((AppleLevelManager)(game.getGutterApp().getLevelManager())).addApple(appleCount);
 			//have completed the level
-			app.getLevelManager().completeLevel(game.getLevelId());
-			game.setResult(game.RESULT_OK, null);
-			//finish();
-			game.finish();
-			//this.endLevelDialog = new EndLevelDialog(game);
+			//app.getLevelManager().completeLevel(game.getLevelId());
+			//game.setResult(game.RESULT_OK, null);
 
+			//game.finish();
+
+			launcher.disable();
+
+			this.endLevelDialog = new EndLevelDialog(game);
+			this.endLevelDialog.displayDialog(_score);
 		}
 	}
 	protected void createPortal(float x, float y)

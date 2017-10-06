@@ -1,5 +1,6 @@
 package com.pandeagames.www.gutterballredux.gameControllers;
 
+import com.pandeagames.www.gutterballredux.Components.AbstractComponent;
 import com.pandeagames.www.gutterballredux.droidControllers.GutterBallApp;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Geom.GeneratedGeom;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.Level;
@@ -75,6 +76,12 @@ public class Game extends SwingActivity {
 		gameComponentList.remove(gameComponent);
 	}
 
+	public void clearGameComponents() {
+		for(AbstractGameComponent comp:gameComponentList) {
+			comp.markDestroy();
+		}
+	}
+
 	public void addBodyComponent(BodyComponent bodyComponent) {
 		if(bodyList==null)return;
 		bodyList.add(bodyComponent);
@@ -114,7 +121,6 @@ public class Game extends SwingActivity {
 		{
 			Bundle bundle = getIntent().getExtras();
 			levelId=bundle.getString("level");
-			levelDef = ((GutterBallApp)getApplicationContext()).getLevelManager().getLevelById(levelId);
 
 			gameComponentList = new BufferedList<AbstractGameComponent>();
 			bodyList = new BodyList<BodyComponent>();
@@ -127,27 +133,7 @@ public class Game extends SwingActivity {
 
 			radialCollision=new RadialCollisionController(this);
 
-			try{
-				Class<?> clazz = Class.forName("com.pandeagames.www.gutterballredux.gameControllers.Levels."+levelId);
-				Constructor<?> constructor = clazz.getConstructor(Game.class, LevelDef.class);
-				level = (Level) constructor.newInstance(this, levelDef);
-			}catch(IllegalAccessException ex){
-				Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
-				return;
-			}catch(ClassNotFoundException ex){
-
-				level = new ThrowLevel(this, new GeneratedGeom(this, levelDef), levelDef);
-
-			}catch(InstantiationException ex){
-				Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
-				return;
-			}catch(NoSuchMethodException ex){
-				Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
-				return;
-			}catch(InvocationTargetException ex){
-				Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
-				return;
-			}
+			loadLevel(levelId);
 
 			scaler = new Point(simulation.getWorldSize().x,
 				simulation.getWorldSize().y);
@@ -158,6 +144,41 @@ public class Game extends SwingActivity {
 		//start sound systems;
 		sp = new GameSoundPool(this, AudioManager.STREAM_MUSIC, 0);
 		mp = MediaPlayer.create(this, R.raw.forest);
+	}
+
+	public void loadLevel(String levelId) {
+
+		if(level != null) {
+			level.markDestroy();
+			level = null;
+		}
+
+		//this.clearComponents();
+		//this.clearGameComponents();
+
+		levelDef = ((GutterBallApp)getApplicationContext()).getLevelManager().getLevelById(levelId);
+
+		try{
+			Class<?> clazz = Class.forName("com.pandeagames.www.gutterballredux.gameControllers.Levels."+levelId);
+			Constructor<?> constructor = clazz.getConstructor(Game.class, LevelDef.class);
+			level = (Level) constructor.newInstance(this, levelDef);
+		}catch(IllegalAccessException ex){
+			Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
+			return;
+		}catch(ClassNotFoundException ex){
+
+			level = new ThrowLevel(this, new GeneratedGeom(this, levelDef), levelDef);
+
+		}catch(InstantiationException ex){
+			Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
+			return;
+		}catch(NoSuchMethodException ex){
+			Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
+			return;
+		}catch(InvocationTargetException ex){
+			Log.e("PANDAS LOVE APPLES", "Unable to generate Level", ex);
+			return;
+		}
 	}
 
 	@Override

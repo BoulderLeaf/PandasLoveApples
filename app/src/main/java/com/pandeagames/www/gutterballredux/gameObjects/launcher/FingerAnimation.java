@@ -7,6 +7,8 @@ import com.pandeagames.R;
 
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
+
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
 
@@ -33,6 +35,7 @@ public class FingerAnimation extends DrawableGameComponent implements ILauncherL
 		this.launcher=launcher;
 		launcher.addLauncherListener(this);
 		this.setPos(launcher.getX(), launcher.getY());
+		Log.i("INFO", "MAKE HAND");
 		hand  = (BitmapDrawable) game.getResources().getDrawable(R.drawable.icon_hand);
 		setState(2);
 	}
@@ -74,6 +77,9 @@ public class FingerAnimation extends DrawableGameComponent implements ILauncherL
 	}
 	public void draw(DrawInfo drawInfo){
 		super.draw(drawInfo);
+
+		if(hand == null){ return; }
+
 		int handWidth=4;
 		Rect des = new Rect(
 				(int)gameView.toScreenX(getX()-handWidth*scale), 
@@ -140,10 +146,11 @@ public class FingerAnimation extends DrawableGameComponent implements ILauncherL
 		
 	}
 	public void destroy(){
+		if(destroyed) {return;}
 		super.destroy();
 		launcher.removeLauncherListener(this);
 		launcher=null;
 		hand=null;
-		
+		Log.i("INFO", "DESTROY HAND");
 	}
 }

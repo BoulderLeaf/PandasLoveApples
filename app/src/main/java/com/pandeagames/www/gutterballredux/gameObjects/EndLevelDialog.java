@@ -1,5 +1,6 @@
 package com.pandeagames.www.gutterballredux.gameObjects;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -8,10 +9,12 @@ import android.support.v4.content.res.ResourcesCompat;
 
 import com.pandeagames.R;
 import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
+import com.pandeagames.www.gutterballredux.droidControllers.GutterBallApp;
 import com.pandeagames.www.gutterballredux.gameControllers.Button;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.IButtonPressListener;
 import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
+import com.pandeagames.www.gutterballredux.gameControllers.levelManagment.LevelManager;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.StageScore;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
@@ -27,7 +30,7 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
     private float padding = 1f;
     private float paddingMinor = 0.8f;
     private BitmapDrawable panda;
-    private int pandas, par, basePoints, totalPoints;
+    private int pandas, par, basePoints, totalPoints, bonus;
     private Rect dest;
     private Typeface _typeFace;
 
@@ -71,9 +74,15 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
         panda = (BitmapDrawable) ResourcesCompat.getDrawable(game.getResources(), R.drawable.panda_green, null);
     }
     public void onButtonPress(Button button) {
-        if(button == this.levelSelectButton)
-        {
+        if(button == this.levelSelectButton) {
             game.finish();
+        }else if(button == this.retryButton){
+            game.loadLevel(game.getLevelId());
+            //Intent game = new Intent(this, Game.class);
+            //game.putExtra("level", selectedLevel);
+        }else if(button == nextlevelButton){
+            LevelManager levelManager = ((GutterBallApp)game.getApplicationContext()).getLevelManager();
+            game.loadLevel(levelManager.getNextLevel(game.getLevelId()).getId());
         }
     }
 
@@ -143,7 +152,7 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
                 bottom - dest.height(),
                 textPaint);
 
-        text = "Bonus";
+        text = "Bonus ( Par "+Integer.toString(par)+" )";
 
         textPaint.setTextSize(gameView.toScreen(1.25f));
         textPaint.getTextBounds(text,0, text.length(), dest);
@@ -155,7 +164,7 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
                 bottom - dest.height(),
                 textPaint);
 
-        text = String.valueOf(par);
+        text = String.valueOf(bonus);
 
         textPaint.setTextSize(gameView.toScreen(2f));
         textPaint.getTextBounds(text,0, text.length(), dest);
@@ -192,19 +201,37 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
                 textPaint);
     };
 
-    public void displayDialog(int pandas, int par, int basePoints, int totalPoints) {
+    public void displayDialog(int pandas, int par, int basePoints, int totalPoints, int bonus) {
         this.pandas = pandas;
         this.par = par;
         this.basePoints = basePoints;
         this.totalPoints = totalPoints;
+        this.bonus = bonus;
     }
 
     public void displayDialog(StageScore score) {
-        this.displayDialog(score.getTokenCount(), score.getPar(), score.getBasePoints(), score.getTotalPoints());
+        this.displayDialog(score.getTokenCount(), score.getPar(), score.getBasePoints(), score.getTotalPoints(), score.getParBonus());
     }
 
     @Override
     public int drawOrder() {
         return 203;
+    }
+
+    @Override
+    public void destroy() {
+        if(destroyed) {return;}
+        levelSelectButton.destroy();
+        nextlevelButton.destroy();
+        retryButton.destroy();
+
+        dest = null;
+        paint = null;
+        textPaint = null;
+        levelSelectButton = null;
+        nextlevelButton = null;
+        retryButton = null;
+
+        super.destroy();
     }
 }

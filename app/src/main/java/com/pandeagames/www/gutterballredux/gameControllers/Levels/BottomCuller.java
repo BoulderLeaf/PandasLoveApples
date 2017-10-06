@@ -45,6 +45,7 @@ public void createBody(){
 	@Override
 	public void update(UpdateInfo info){
 		super.update(info);
+		if(body == null)  { return; }
 		ContactEdge contact = body.getContactList();
 		while(contact!=null)
 		{
@@ -77,6 +78,7 @@ public void createBody(){
 	}
 	@Override 
 	public void destroy(){
+		if(destroyed) {return;}
 		super.destroy();
 		bottomCullListeners.clear();
 		bottomCullListeners=null;

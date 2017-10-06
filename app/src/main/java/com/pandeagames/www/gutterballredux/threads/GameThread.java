@@ -32,7 +32,7 @@ public class GameThread extends DrawThread {
 	public void tick(TickInfo tickInfo) {
 		UpdateInfo  info = new UpdateInfo(tickInfo);
 		for(AbstractGameComponent comp : updateList){
-			if(!comp.destroyed()){
+			if(!comp.destroyed() && !comp.getMarkDestroy()){
 				comp.update(info);
 			}
 			

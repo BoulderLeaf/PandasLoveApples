@@ -1,6 +1,7 @@
 package com.pandeagames.www.gutterballredux.infoHolders;
 
 import com.pandeagames.www.gutterballredux.gameObjects.AppleType;
+import com.pandeagames.www.gutterballredux.gameObjects.launcher.ILauncherListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 
 public class StageScore {
 
+
+    private ArrayList<IScoreChangeListener> scoreListeners;
     private int _pandas;
     private int _par;
     private int _basePoints;
@@ -25,20 +28,34 @@ public class StageScore {
     public StageScore()
     {
         combos = new ArrayList<ArrayList<Integer>>();
+        scoreListeners=new ArrayList<IScoreChangeListener>();
     }
 
-    public void  setPandas(int value){ _pandas = value; }
     public int getPandas(){ return _pandas; }
 
     public void  setPar(int value){ _par = value; }
     public int getPar(){ return _par; }
 
     public int  addApple(int token, AppleType type) {
+        if(combos.size() <= token)
+        {
+            return 0;
+        }
+
         combos.get(token).add(type == AppleType.NORMAL ? 0:1);
+
+        _apples++;
+        int basePoints = this.getBasePoints();
+        int totalPoints = this.getTotalPoints();
+        int combo = getCombo(token);
+
+        for (IScoreChangeListener listener:scoreListeners) {
+            listener.scoreChange(combos.size(), basePoints, totalPoints,  _apples, combo);
+        }
+
         return type == AppleType.NORMAL ? _applePointValue:0;
     }
 
-    public void  setApples(int value){ _apples = value; }
     public int getApples(){ return _apples; }
 
     public void  setApplePointValue(int value){ _applePointValue = value; }
@@ -51,8 +68,9 @@ public class StageScore {
     public int getUnderParValue(){ return _underParValue; }
 
     public int getComboToken() {
+        int token = combos.size();
         combos.add(new ArrayList());
-        return _token++;
+        return token;
     }
 
     public int getParBonus() {
@@ -74,6 +92,16 @@ public class StageScore {
         return combo * _applePointValue;
     }
 
+    public int getCombo(int token) {
+        int combo = 0;
+
+        for (int apple:combos.get(token)) {
+            combo = apple == 0 ? combo:combo+1;
+        }
+
+        return combo;
+    }
+
     public int getBasePoints() {
         int points = 0;
         int combo = 0;
@@ -83,6 +111,7 @@ public class StageScore {
             }
 
             points += combo;
+            combo = 0;
         }
 
         return points * _applePointValue;
@@ -90,5 +119,12 @@ public class StageScore {
 
     public int getTotalPoints() {
         return getBasePoints() + getParBonus();
+    }
+
+    public void addScoreChangeListener(IScoreChangeListener launcherListener){
+        scoreListeners.add(launcherListener);
+    }
+    public void removeScoreChangeListener(IScoreChangeListener launcherListener){
+        scoreListeners.remove(launcherListener);
     }
 }

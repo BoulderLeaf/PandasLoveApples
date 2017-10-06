@@ -24,6 +24,7 @@ protected int drawOrder=0;
 
 	@Override
 	public void destroy() {
+		if(destroyed) {return;}
 		// TODO Auto-generated method stub
 		activity.removeDrawableComponent(this);
 		super.destroy();

@@ -64,7 +64,7 @@ public class Background extends DrawableGameComponent {
 		super.draw(info);
 		
 		if(bitmap==null){
-		
+			return;
 		}
 		
 		if(fillCanvas)	info.getCanvas().drawARGB(255, 159, 184, 58);
@@ -80,8 +80,7 @@ public class Background extends DrawableGameComponent {
 				0,
 				bitmap.getWidth(),
 				bitmap.getHeight());
-		
-		
+
 		info.getCanvas().drawBitmap(bitmap, src, des, paint);
 	}
 	@Override
@@ -90,6 +89,7 @@ public class Background extends DrawableGameComponent {
 		return -1;
 	}
 	public void destroy(){
+		if(destroyed) {return;}
 		super.destroy();
 		paint=null;
 		bitmap=null;

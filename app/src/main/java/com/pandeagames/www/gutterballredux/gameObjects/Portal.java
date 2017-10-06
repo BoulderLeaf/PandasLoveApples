@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.RadialCollider;
 import com.pandeagames.www.gutterballredux.gameControllers.RadialID;
+import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import com.pandeagames.www.gutterballredux.droidControllers.SwingActivity;
@@ -23,6 +24,7 @@ private BitmapDrawable sphere;
 private RadialCollider collider;
 private Floater floater;
 	private AppleType type;
+	private float fallValue = 0;
 private IObtainedCallback obtainedCallback;
 	public Portal(Game activity, AppleType type) {
 		this(activity, 0, 0, type);
@@ -36,6 +38,7 @@ private IObtainedCallback obtainedCallback;
 		//used to generate the floating animation of the apple
 		floater=new Floater(activity, 2, 0.2f);
 
+		fallValue = (float)(-15 + Math.random() * - 5);
 
 		paint = new Paint();
 		paint.setARGB(255, 107, 255, 107);
@@ -79,9 +82,9 @@ private IObtainedCallback obtainedCallback;
 
 		Rect des = new Rect();
 		des.set((int)gameView.toScreenX(x-r), 
-				(int)gameView.toScreenY((y-1.1875f)),
+				(int)gameView.toScreenY((y+fallValue-1.1875f)),
 				(int)gameView.toScreenX(x+r),
-				(int)gameView.toScreenY(y+r));
+				(int)gameView.toScreenY(y+fallValue+r));
 
 		sphere.setBounds(des);
 		sphere.draw(info.getCanvas());
@@ -95,6 +98,7 @@ private IObtainedCallback obtainedCallback;
 	}
 	@Override
 	public void destroy(){
+		if(destroyed) {return;}
 		collider.destroy();
 	super.destroy();
 	}
@@ -109,7 +113,8 @@ private IObtainedCallback obtainedCallback;
 	}
 	@Override
 	public void update(UpdateInfo updateInfo){
-	super.update(updateInfo);
+		fallValue = fallValue * 0.85f;
+		super.update(updateInfo);
 	}
 	public void setCallback(IObtainedCallback callback){
 		this.obtainedCallback=callback;

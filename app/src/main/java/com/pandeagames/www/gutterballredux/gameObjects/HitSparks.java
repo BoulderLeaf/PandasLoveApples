@@ -26,9 +26,6 @@ import com.pandeagames.www.gutterballredux.Components.interfaces.IContactCallbac
 public class HitSparks extends DrawableGameComponent implements IContactCallback {
 	private Spark[] sparks;
 	private float fric;
-	private Body body;
-	private ContactEdge edge;
-	private Contact contact;
 	private Manifold manifold;
 	private WorldManifold worldManifold;
 	private Paint paint;
@@ -75,6 +72,23 @@ public class HitSparks extends DrawableGameComponent implements IContactCallback
 		}
 		
 	}
+
+	@Override
+	public void destroy(){
+		if(this.destroyed()) {
+			return;
+		}
+
+		game.getSimulation().removePostSolveListener(this);
+
+		sparks = null;
+		grass = null;
+		manifold = null;
+		worldManifold = null;
+
+		super.destroy();
+	}
+
 	@Override
 	public void draw(DrawInfo drawInfo){
 		super.draw(drawInfo);

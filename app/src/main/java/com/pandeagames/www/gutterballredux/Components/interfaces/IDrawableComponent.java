@@ -7,6 +7,8 @@ import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 public interface IDrawableComponent {
 public void draw(DrawInfo info);
 public int drawOrder();
+	public boolean getMarkDestroy();
+	public boolean destroyed();
 public Comparator drawableComparator=new Comparator<IDrawableComponent>() {
 	public int compare(IDrawableComponent one, IDrawableComponent other){
 		return one.drawOrder()-other.drawOrder();
