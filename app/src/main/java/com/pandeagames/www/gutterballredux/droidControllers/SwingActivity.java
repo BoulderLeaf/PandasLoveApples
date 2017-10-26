@@ -149,6 +149,13 @@ public class SwingActivity extends Activity implements SurfaceHolder.Callback,
 		
 	}
 
+	@Override
+	public void onBackPressed(){
+		super.onBackPressed();
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+	}
+
+
 	protected void onStop() {
 		super.onStop();
 		if (drawThread != null)

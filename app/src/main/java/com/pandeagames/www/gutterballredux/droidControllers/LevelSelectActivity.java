@@ -98,6 +98,7 @@ public class LevelSelectActivity extends SwingActivity implements android.view.V
 		Intent game = new Intent(this, Game.class);
 		game.putExtra("level", selectedLevel);
 		startActivityForResult(game,1);
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 	protected void onPause(){
 		super.onPause();
