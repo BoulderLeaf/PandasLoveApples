@@ -59,6 +59,7 @@ protected int appleCount=0;
 		_score.setApplePointValue(100);
 		_score.setPar(5);
 		_score.setParValue(500);
+		_score.setUnderParValue(1500);
 		scoreUI= new ScoreComboUI(game, _score);
 		launcher = new Launcher(game, _score, 12, 38);
 		launcher.setDelay(1000);

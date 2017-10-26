@@ -153,8 +153,7 @@ public class Game extends SwingActivity {
 			level = null;
 		}
 
-		//this.clearComponents();
-		//this.clearGameComponents();
+		this.levelId = levelId;
 
 		levelDef = ((GutterBallApp)getApplicationContext()).getLevelManager().getLevelById(levelId);
 
