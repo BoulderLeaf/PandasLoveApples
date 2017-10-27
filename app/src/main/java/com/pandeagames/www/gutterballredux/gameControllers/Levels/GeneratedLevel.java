@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by ccove on 7/6/2017.
  */
@@ -19,13 +21,14 @@ import org.json.JSONObject;
 public class GeneratedLevel extends AbstractGameComponent {
 
     private JSONObject _levelJSON;
-
+    private ArrayList<AbstractGameComponent> levelObjects;
     protected LevelDef levelDef;
 
     public GeneratedLevel(Game game, LevelDef levelDef){
         super(game);
 
         this.levelDef = levelDef;
+        levelObjects = new ArrayList<AbstractGameComponent>();
 
         this.init();
     }
@@ -61,6 +64,19 @@ public class GeneratedLevel extends AbstractGameComponent {
 
     protected void initializeGameComponent(AbstractGameComponent gameComponent,JSONObject object)
     {
+        this.levelObjects.add(gameComponent);
         GameObjectUtils.syncGameObjectFromJSON(gameComponent, object);
+    }
+
+    @Override
+    public void destroy(){
+        super.destroy();
+
+        for(AbstractGameComponent gameComponent:levelObjects) {
+            gameComponent.markDestroy();
+        }
+
+        levelObjects.clear();
+        levelObjects = null;
     }
 }
