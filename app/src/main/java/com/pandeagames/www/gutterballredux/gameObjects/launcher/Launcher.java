@@ -41,6 +41,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	private double baseStrength = 5;
 	private ArrayList<Actor> actorList;
 	private ArrayList<Trail> trailList;
+	private boolean onCooldown = false;
 
 	private StageScore _score;
 
@@ -131,6 +132,29 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		}
 		
 	}
+
+	public void setOnCooldown(boolean value){
+
+		boolean changed = value != onCooldown;
+
+		if(!changed) {return;}
+
+		this.onCooldown = value;
+
+		if(value)
+		{
+			for(ILauncherListener listener : launcherListeners){
+				listener.disableLauncher(this);
+			}
+		}
+		else
+		{
+			for(ILauncherListener listener : launcherListeners){
+				listener.enableLauncher(this);
+			}
+		}
+	}
+
 	public void disable(){
 		setEnabled(false);
 		for(ILauncherListener listener : launcherListeners){
@@ -160,7 +184,7 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	@Override
 	public void onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
-		if(!enabled){return;}
+		if(!enabled || onCooldown){return;}
 			switch(event.getAction()){
 			case MotionEvent.ACTION_UP:
 				if(isPulling)stopPull(event);
@@ -192,12 +216,12 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 	public void update(UpdateInfo updateInfo)
 	{
 		super.update(updateInfo);
-		if(!enabled && updateInfo.getTime()-lastLaunchTime>delay){
-			enable();
+		if(onCooldown && updateInfo.getTime()-lastLaunchTime>delay){
+			this.setOnCooldown(false);
 		}
 	}
 	private void stopPull(MotionEvent event){
-		if(!enabled){return;}
+		if(!enabled || onCooldown){return;}
 		STATE=IDLE;
 		//Spawn Actor
 		Actor actor = new Actor(game, new Vec2(getX(), getY()), _score.getComboToken());
@@ -239,14 +263,14 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		}
 		if(delay!=0){
 			lastLaunchTime=System.currentTimeMillis();
-			disable();
+			this.setOnCooldown(true);
 		}
 		game.getSoundPool().playRandom(game.getSoundPool().getPool().swing1,
 				game.getSoundPool().getPool().swing2);
 	}
 	private void doPull(MotionEvent event)
 	{
-		if(!enabled){return;}
+		if(!enabled || onCooldown){return;}
 		STATE=PULLING;
 		
 		isPulling=true;

@@ -53,7 +53,7 @@ public class Breakable extends BodyComponent {
             queudBody = other;
             velocity = other.getVelocity();
 
-            if(other.containsCollisionGroup(collisionLayer) && velocity > breakVelocity){
+            if(other.containsCollisionGroup(collisionLayer) && velocity > breakVelocity && contact.contact.isTouching()){
                 if(!queueCollide){
                     collideVelocity = other.getBody().getLinearVelocity().clone();
                 }

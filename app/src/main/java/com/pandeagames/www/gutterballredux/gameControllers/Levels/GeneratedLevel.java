@@ -73,7 +73,7 @@ public class GeneratedLevel extends AbstractGameComponent {
         super.destroy();
 
         for(AbstractGameComponent gameComponent:levelObjects) {
-            gameComponent.markDestroy();
+            if(!gameComponent.destroyed()){gameComponent.markDestroy();}
         }
 
         levelObjects.clear();
