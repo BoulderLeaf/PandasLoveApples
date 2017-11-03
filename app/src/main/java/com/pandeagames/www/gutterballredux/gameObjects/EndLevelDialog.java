@@ -33,6 +33,7 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
     private int pandas, par, basePoints, totalPoints, bonus;
     private Rect dest;
     private Typeface _typeFace;
+    private Button buttonPressed = null;
 
     public EndLevelDialog(Game game)
     {
@@ -74,16 +75,7 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
         panda = (BitmapDrawable) ResourcesCompat.getDrawable(game.getResources(), R.drawable.panda_green, null);
     }
     public void onButtonPress(Button button) {
-        if(button == this.levelSelectButton) {
-            game.finish();
-        }else if(button == this.retryButton){
-            game.loadLevel(game.getLevelId());
-            //Intent game = new Intent(this, Game.class);
-            //game.putExtra("level", selectedLevel);
-        }else if(button == nextlevelButton){
-            LevelManager levelManager = ((GutterBallApp)game.getApplicationContext()).getLevelManager();
-            game.loadLevel(levelManager.getNextLevel(game.getLevelId()).getId());
-        }
+        buttonPressed = button;
     }
 
     public void update(UpdateInfo info)
@@ -101,6 +93,19 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
         this.levelSelectButton.setX(Simulation.SIMULATION_WIDTH / 2 - this.levelSelectButton.getWidth() / 2);
         this.nextlevelButton.setX(Simulation.SIMULATION_WIDTH / 2 - this.nextlevelButton.getWidth() / 2);
         this.retryButton.setX(Simulation.SIMULATION_WIDTH / 2 - this.retryButton.getWidth() / 2);
+
+        if(buttonPressed == this.levelSelectButton) {
+            game.finish();
+        }else if(buttonPressed == this.retryButton){
+            game.loadLevel(game.getLevelId());
+            //Intent game = new Intent(this, Game.class);
+            //game.putExtra("level", selectedLevel);
+        }else if(buttonPressed == nextlevelButton){
+            LevelManager levelManager = ((GutterBallApp)game.getApplicationContext()).getLevelManager();
+            game.loadLevel(levelManager.getNextLevel(game.getLevelId()).getId());
+        }
+
+        buttonPressed = null;
     }
 
     public void draw(DrawInfo drawInfo) {

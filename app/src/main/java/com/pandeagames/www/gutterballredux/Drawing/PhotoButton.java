@@ -106,13 +106,14 @@ public class PhotoButton extends Button implements AnimatorListener {
 	public void draw(Canvas c){
 		super.draw(c);
 		Rect des = new Rect();
-		paddingBottom=getCompoundPaddingBottom();
-		paddingTop=getCompoundPaddingTop();
-		paddingRight=getCompoundPaddingRight();
-		paddingLeft=getCompoundPaddingLeft();
+
+		paddingBottom=0;
+		paddingTop=0;
+		paddingRight=0;
+		paddingLeft=0;
+
 		if(photo!=null){
 			if(!this.isEnabled() && !photoOnDisabled){
-				
 			}else{
 				des.set(paddingLeft,paddingTop,getWidth()-paddingRight,getHeight()-paddingBottom);
 				if(levelBeaten){
@@ -122,9 +123,7 @@ public class PhotoButton extends Button implements AnimatorListener {
 					photo.setBounds(des);
 					photo.draw(c);
 				}
-					
 			}
-			
 		}
 		Rect coverDes = new Rect();
 		coverDes.set(des);
@@ -132,8 +131,7 @@ public class PhotoButton extends Button implements AnimatorListener {
 			if(disabledPhoto!=null){
 				des.set(paddingLeft,paddingTop,getWidth()-paddingRight,getHeight()-paddingBottom);
 				disabledPhoto.setBounds(des);
-				disabledPhoto.draw(c);	
-				
+				disabledPhoto.draw(c);
 			}
 			if(this.disabledIcon!=null){
 				float scale=1f;
@@ -154,8 +152,7 @@ public class PhotoButton extends Button implements AnimatorListener {
 				des.set(left,top,right,bottom);
 				disabledIcon.setBounds(des);
 				disabledIcon.draw(c);
-				
-				
+
 				c.drawText(this.getText().toString(), des.centerX()-this.getText().length()*7, des.bottom+40, textPaint);
 			}
 		}
@@ -170,16 +167,13 @@ public class PhotoButton extends Button implements AnimatorListener {
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-
-
 		int desiredWidth = widthSize - getPaddingLeft() - getPaddingRight();
 		int desiredHeight = (int)(widthSize * heightRatio);
 
 		int width =getMeasuredWidth();
 		int height = (int)((width - getCompoundPaddingRight() - getCompoundPaddingLeft()) * heightRatio);
 
-		    setMeasuredDimension(width, height);
-
+		setMeasuredDimension(width, height);
 	}
 	public void setDisabledPhotoRes(int res){
 		if(res==-1)return;
@@ -196,15 +190,12 @@ public class PhotoButton extends Button implements AnimatorListener {
 		//dummy animation used to update the view
 		ObjectAnimator anim1 = ObjectAnimator.ofInt(this, "dummyValue", 255,0);
 
-	
-				
 		ObjectAnimator anim2 = ObjectAnimator.ofInt(coverPaint, "alpha", 255,0);
 		anim1.setInterpolator(new DecelerateInterpolator());
 		anim2.setInterpolator(new DecelerateInterpolator());
 		anim1.setDuration(2500);
 		anim2.setDuration(2500);
 
-		
 		animSet.setDuration(2000);
 		animSet.playTogether(anim1, anim2);
 		animSet.setInterpolator(new DecelerateInterpolator());
