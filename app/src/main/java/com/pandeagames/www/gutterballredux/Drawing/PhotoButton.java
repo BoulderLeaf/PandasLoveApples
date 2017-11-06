@@ -116,13 +116,8 @@ public class PhotoButton extends Button implements AnimatorListener {
 			if(!this.isEnabled() && !photoOnDisabled){
 			}else{
 				des.set(paddingLeft,paddingTop,getWidth()-paddingRight,getHeight()-paddingBottom);
-				if(levelBeaten){
-					photo.setBounds(des);
-					photo.draw(c);	
-				}else{
-					photo.setBounds(des);
-					photo.draw(c);
-				}
+				photo.setBounds(des);
+				photo.draw(c);
 			}
 		}
 		Rect coverDes = new Rect();

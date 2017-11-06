@@ -20,13 +20,9 @@ import com.pandeagames.www.gutterballredux.gameObjects.Actor;
 public class CullShaftRenderer extends DrawableGameComponent implements IBottomCullListener {
 	private List<Culling> cullList;
 	private BitmapDrawable lightShaft;
-	private Paint textPaint;
 	public CullShaftRenderer(Game game) {
 		super(game);
 		lightShaft = (BitmapDrawable) game.getResources().getDrawable(R.drawable.light_pillar);
-		textPaint=new Paint();
-		textPaint.setARGB(255, 232,223, 58);
-		textPaint.setTextSize(60);
 		cullList = new ArrayList<Culling>();
 	}
 	@Override
@@ -73,11 +69,6 @@ public class CullShaftRenderer extends DrawableGameComponent implements IBottomC
 			lightShaft.setBounds(des);
 			lightShaft.setAlpha((int)(255*culling.alpha));
 			lightShaft.draw(drawInfo.getCanvas());
-			
-			//Draw Text
-			if(culling.main){
-				drawInfo.getCanvas().drawText("-1", des.left, des.top+(int)gameView.toScreenY(5)-gameView.toScreenY(4)*(1-culling.alpha), textPaint);
-			}
 		}
 	}
 	private class Culling {

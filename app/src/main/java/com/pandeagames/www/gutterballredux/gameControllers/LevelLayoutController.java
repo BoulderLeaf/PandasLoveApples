@@ -48,6 +48,9 @@ public class LevelLayoutController extends AbstractComponent implements IStatusL
 			if(row == null) return;
 
 			AppleLevelDef def = (AppleLevelDef)levelDefs.get(i);
+
+
+
 			PhotoButton button = new PhotoButton(
 					activity,
 					def.getMiniBgResId(),

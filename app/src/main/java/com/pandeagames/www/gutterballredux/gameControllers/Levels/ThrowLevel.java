@@ -127,13 +127,10 @@ protected int appleCount=0;
 
 		if(portalList.size()==0){
 			((AppleLevelManager)(game.getGutterApp().getLevelManager())).addApple(appleCount);
-			//have completed the level
-			//app.getLevelManager().completeLevel(game.getLevelId());
-			//game.setResult(game.RESULT_OK, null);
-
-			//game.finish();
 
 			launcher.disable();
+
+			app.getLevelManager().completeLevel(game.getLevelId());
 
 			this.endLevelDialog = new EndLevelDialog(game);
 			this.endLevelDialog.displayDialog(_score);

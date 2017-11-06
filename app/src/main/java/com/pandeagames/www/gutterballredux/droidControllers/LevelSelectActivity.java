@@ -29,7 +29,6 @@ public class LevelSelectActivity extends SwingActivity implements android.view.V
 	private LevelManager levelManager;
 	private Button resetLevelsButton;
 	private Button unlockLevelsButton;
-	private TextView appleCount;
 	private LevelLayoutController levelLayoutController;
 	public static int savedUnlockCount;
 	private Tracker mTracker;
@@ -52,6 +51,7 @@ public class LevelSelectActivity extends SwingActivity implements android.view.V
 		}
 		if(levelManager.getLevelsUnlocked()!=savedUnlockCount && savedUnlockCount!=0){
 				//means that new levels have been unlocked by the level manager
+				//means that new levels have been unlocked by the level manager
 				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 				View layout = inflater.inflate(R.layout.new_levels_toast, (ViewGroup)findViewById(R.id.custom_toast_layout)); 
@@ -64,15 +64,11 @@ public class LevelSelectActivity extends SwingActivity implements android.view.V
 		resetLevelsButton.setOnClickListener(this);
 		unlockLevelsButton = (Button)findViewById(R.id.unlockAllLevels);
 		unlockLevelsButton.setOnClickListener(this);
-		appleCount = (TextView)findViewById(R.id.appleCount);
 	}
 	protected void onStart(){
 		super.onStart();
 		GutterBallApp app = super.app;
-		AppleLevelManager manager =(AppleLevelManager)(app.getLevelManager()); 
-		int count=(manager).getAppleCount();
-		appleCount.setText(Integer.toString(count));
-		//appleCount.setText((manager).getAppleCount());
+		AppleLevelManager manager =(AppleLevelManager)(app.getLevelManager());
 	}
 	protected void onResume(){
 		super.onResume();
@@ -120,7 +116,6 @@ public class LevelSelectActivity extends SwingActivity implements android.view.V
 			levelManager.reset();
 			levelLayoutController.initialize();
 			((AppleLevelManager)levelManager).setAppleCount(0);
-			appleCount.setText(Integer.toString(0));
 		}else if(unlockLevelsButton==view){
 			levelManager.unlockAll();
 			levelLayoutController.initialize();
