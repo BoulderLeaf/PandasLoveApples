@@ -93,44 +93,37 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		info.getCanvas().drawCircle(gameView.toScreenX(getX()),
 				gameView.toScreenY(getY()),
 				gameView.toScreen(1), paint);
+
 		//Pull Line
-		if(isPulling){
-			dx = gameView.toScreenX(getX())-fingerPt.x;
-			dy = gameView.toScreenY(getY())-fingerPt.y;
-			d = (int)Math.sqrt(dx*dx+dy*dy);
-			line_offset+=d/80;
+		if(isPulling ) {
+			dx = gameView.toScreenX(getX()) - fingerPt.x;
+			dy = gameView.toScreenY(getY()) - fingerPt.y;
+			d = (int) Math.sqrt(dx * dx + dy * dy);
+			line_offset += d / 80;
 			//double a= Math.atan2(dy,  dx)/(Math.PI/180);
-			a= Math.atan2(dy,  dx);
-			
+			a = Math.atan2(dy, dx);
+
 			cos = Math.cos(a);
 			sin = Math.sin(a);
 
-			
-			if(line_offset>lineSize+lineDist){
-				int r = (int)(line_offset%(lineSize+lineDist));
-				line_offset=r;
+
+			if (line_offset > lineSize + lineDist) {
+				int r = (int) (line_offset % (lineSize + lineDist));
+				line_offset = r;
 			}
-			line_offset=0;
-			for(int i=(int)line_offset;i<d;i+=lineSize+lineDist){
-				float x = (float)(cos*(i+lineSize));
-				float y= (float)(sin*(i+lineSize));
+			line_offset = 0;
+			for (int i = (int) line_offset; i < d; i += lineSize + lineDist) {
+				float x = (float) (cos * (i + lineSize));
+				float y = (float) (sin * (i + lineSize));
 				info.getCanvas().drawLine(
-						(int)(gameView.toScreenX(getX())-x),
-						(int)(gameView.toScreenY(getY())-y),
-						(int)(gameView.toScreenX(getX())-cos*(i)),
-						(int)(gameView.toScreenY(getY())-sin*(i)),
+						(int) (gameView.toScreenX(getX()) - x),
+						(int) (gameView.toScreenY(getY()) - y),
+						(int) (gameView.toScreenX(getX()) - cos * (i)),
+						(int) (gameView.toScreenY(getY()) - sin * (i)),
 						pullPaint);
-				
+
 			}
-			
-			/*info.getCanvas().drawLine(
-					fingerPt.x,
-					fingerPt.y,
-					gameView.toScreenX(getX()),
-					gameView.toScreenY(getY()),
-					pullPaint);*/
 		}
-		
 	}
 
 	public void setOnCooldown(boolean value){
@@ -228,30 +221,28 @@ public class Launcher extends DrawableGameComponent implements IUserInputCompone
 		actorList.add(actor);
 		Trail trail = new Trail(game, actor);
 		trailList.add(trail);
+
 		//Launch Actor
-		float dx  = gameView.toWorld(fingX)-getX();
-		float dy  = gameView.toWorld(fingY)-getY();
-		double a= Math.atan2(dy,  dx);
-		double d= Math.sqrt(dx*dx+dy*dy);
-		
-		//double vd = Math.sqrt(vx*vx+vy*vy);
-		double vd = Math.sqrt(dx*dx+dy*dy);
+		float dx  =fingerPt.x -gameView.toScreenX(getX());
+		float dy  = fingerPt.y-gameView.toScreenY(getY());
+		float a= (float)Math.atan2((float)dy,  (float)dx);
+		float d= gameView.toWorld((float)Math.sqrt(dx*dx+dy*dy));
+
+		float vd = gameView.toWorld((float)Math.sqrt(dx*dx+dy*dy));
 
 		vd = vd > r ? r:vd;
 		
-		double cos = Math.cos(a);
-		double sin = Math.sin(a);
+		float cos = (float)Math.cos(a);
+		float sin = (float)Math.sin(a);
 		
-		double dNew = Math.pow(d/100, 3);
-		double dReduced = dNew*200;
+		float dNew = (float)Math.pow((float)d/100, 3);
+		float dReduced = dNew*200;
 		
-		double power = baseStrength + (vd / r) * maxStrength;
+		float power = (float)baseStrength + (vd / r) * (float)maxStrength;
 		
 		Vec2 force = new Vec2(
 				(float)(cos*power), 
 				(float)(sin*power));
-		//Vec2 force = new Vec2((float)(cos*(d*10)), (float)(sin*(d*10)));
-		//Vec2 force = new Vec2((float)(cos*(d/20+Math.abs(vx)*4)), (float)(sin*(d/20+Math.abs(vy)*4)));
 		
 		BodyLauncher launcher = new BodyLauncher(force, force);
 		

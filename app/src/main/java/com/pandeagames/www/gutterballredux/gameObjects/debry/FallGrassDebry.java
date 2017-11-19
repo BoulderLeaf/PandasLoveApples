@@ -7,25 +7,27 @@ import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import org.jbox2d.common.Vec2;
 
 /**
- * Created by ccove on 12/18/2016.
+ * Created by ccove on 11/19/2017.
  */
 
-public class LargeGrassBlockDebry extends GrassBlockDebry {
-    public LargeGrassBlockDebry(Game game, float x, float y, Vec2 linearVelocity)
+public class FallGrassDebry extends GrassBlockDebry {
+    public FallGrassDebry(Game game, float x, float y, Vec2 linearVelocity)
     {
         super(game, x, y, linearVelocity);
     }
-    public LargeGrassBlockDebry(Game game, float x, float y)
+
+    public FallGrassDebry(Game game, float x, float y)
     {
-        super(game, x, y);
+        super(game, x, y, new Vec2(0, 5));
     }
+
     @Override
     protected int getGrassCount(){
-        return 50;
+        return 100;
     }
     @Override
     protected Rect getRect(){
-        return new Rect(0, 0, 8, 8);
+        return new Rect(0, 0, 4, 4);
     }
     @Override
     protected float getGrassVelocity(){

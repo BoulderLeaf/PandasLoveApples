@@ -14,12 +14,10 @@ public class MediumGrassBlockDebry extends GrassBlockDebry {
     public MediumGrassBlockDebry(Game game, float x, float y, Vec2 linearVelocity)
     {
         super(game, x, y, linearVelocity);
-        bodies.add(new Debry02(game,new Vec2(x -1, y +1)));
     }
     public MediumGrassBlockDebry(Game game, float x, float y)
     {
         super(game, x, y);
-        bodies.add(new Debry02(game,new Vec2(x -1, y +1)));
     }
 
     @Override

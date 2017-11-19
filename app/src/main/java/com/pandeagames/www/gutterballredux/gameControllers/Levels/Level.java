@@ -27,7 +27,7 @@ public Level(Game game, BodyComponent geometry, LevelDef levelDef){
 	this.geometry=geometry;
 	bg  = new Background(game, ((AppleLevelDef)levelDef).getBgResId());
 	generateCuller(game);
-	gShift = new GravityShift(game);
+	//gShift = new GravityShift(game);
 }
 private void generateCuller(Game game){
 	culler = new BottomCuller(game);
@@ -50,7 +50,7 @@ public void destroy(){
 	geometry.destroy();
 	bg.destroy();
 	culler.destroy();
-	gShift.destroy();
+	//gShift.destroy();
 	cullRenderer.destroy();
 
 	culler=null;

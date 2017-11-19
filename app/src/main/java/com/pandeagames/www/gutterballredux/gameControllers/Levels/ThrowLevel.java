@@ -28,6 +28,7 @@ import com.pandeagames.www.gutterballredux.gameObjects.HitSparks;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal;
 import com.pandeagames.www.gutterballredux.gameObjects.Portal.IObtainedCallback;
 import com.pandeagames.www.gutterballredux.gameObjects.ScoreComboUI;
+import com.pandeagames.www.gutterballredux.gameObjects.StarExplosion;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.FingerAnimation;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.Launcher;
 import com.pandeagames.www.gutterballredux.gameObjects.launcher.LauncherAnimation;
@@ -123,6 +124,9 @@ protected int appleCount=0;
 
 		if(portal.getType() == AppleType.GOLDEN) {
 			ComboDisplay comboDisplay = new ComboDisplay(game, portal.getX(), portal.getY(), _score.getCombo(actor.getComboToken()));
+
+			StarExplosion stars = new StarExplosion(game, portal.getX(), portal.getY(), 10000, _score.getCombo(actor.getComboToken()));
+
 		}
 
 		if(portalList.size()==0){

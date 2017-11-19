@@ -35,8 +35,6 @@ public class GrassBlockDebry extends DrawableGameComponent {
 
         bodies = new ArrayList<>();
 
-
-
         Rect rect = getRect();
         positions = new float[getGrassCount() * 2];
         velocities = new float[getGrassCount() * 2];

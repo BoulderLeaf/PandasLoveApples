@@ -10,6 +10,11 @@ import com.pandeagames.R;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+
+import com.pandeagames.www.gutterballredux.Components.AbstractComponent;
+import com.pandeagames.www.gutterballredux.Components.interfaces.IDestroyListener;
+import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
+import com.pandeagames.www.gutterballredux.gameObjects.debry.FallGrassDebry;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
@@ -17,13 +22,15 @@ import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.GameView;
 import com.pandeagames.www.gutterballredux.gameObjects.Actor;
 
-public class CullShaftRenderer extends DrawableGameComponent implements IBottomCullListener {
+public class CullShaftRenderer extends DrawableGameComponent implements IBottomCullListener, IDestroyListener {
 	private List<Culling> cullList;
 	private BitmapDrawable lightShaft;
+	private List<FallGrassDebry> grassDebry;
 	public CullShaftRenderer(Game game) {
 		super(game);
 		lightShaft = (BitmapDrawable) game.getResources().getDrawable(R.drawable.light_pillar);
 		cullList = new ArrayList<Culling>();
+		grassDebry = new ArrayList<FallGrassDebry>();
 	}
 	@Override
 	public void update(UpdateInfo updateInfo){
@@ -43,7 +50,10 @@ public class CullShaftRenderer extends DrawableGameComponent implements IBottomC
 	@Override
 	public void onBottomCull(Actor actor) {
 		int jitterFactor = 2;
-		Culling  culling= new Culling();
+		FallGrassDebry debry = new FallGrassDebry(game, actor.getX(), Simulation.SIMULATION_HEIGHT);
+		debry.addDestroyListener(this);
+
+		/*Culling  culling= new Culling();
 		culling.x=actor.getX();
 		cullList.add(culling);
 		culling.main=true;
@@ -54,7 +64,7 @@ public class CullShaftRenderer extends DrawableGameComponent implements IBottomC
 			culling.scale=(jitterFactor-Math.abs(ran))/jitterFactor/2+0.5f;
 			culling.alpha=culling.scale;
 			cullList.add(culling);
-		}
+		}*/
 	}
 	@Override
 	public void draw(DrawInfo drawInfo){
@@ -71,6 +81,22 @@ public class CullShaftRenderer extends DrawableGameComponent implements IBottomC
 			lightShaft.draw(drawInfo.getCanvas());
 		}
 	}
+
+	@Override
+	public void destroy(){
+		super.destroy();
+
+		if(destroyed) {return;}
+
+		for(FallGrassDebry debry:grassDebry) {
+			debry.destroy();
+		}
+
+		grassDebry.clear();
+		grassDebry = null;
+	}
+
+
 	private class Culling {
 		public boolean main = false;//number will render over main shaft
 		public float scale=1.0f;
@@ -79,4 +105,7 @@ public class CullShaftRenderer extends DrawableGameComponent implements IBottomC
 		public float y=0.0f;
 	}
 
+	public void onComponentDestroyed(AbstractComponent component){
+		grassDebry.remove(component);
+	}
 }

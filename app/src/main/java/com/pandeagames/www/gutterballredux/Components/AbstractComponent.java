@@ -1,10 +1,14 @@
 package com.pandeagames.www.gutterballredux.Components;
 
+import com.pandeagames.www.gutterballredux.Components.interfaces.IDestroyListener;
 import com.pandeagames.www.gutterballredux.droidControllers.SwingActivity;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import android.app.Activity;
 import android.graphics.Point;
 import android.view.SurfaceView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractComponent {
 	protected boolean destroyed;
@@ -18,10 +22,12 @@ public abstract class AbstractComponent {
 	private Point pt;
 	private boolean enabled=true;
 	private boolean hidden;
+	private List<IDestroyListener> destroyListeners;
 	public AbstractComponent(SwingActivity activity){
 		pt=new Point();
 		this.activity=activity;
 		view=activity.getView();
+		destroyListeners = new ArrayList<IDestroyListener>();
 		activity.addComponent(this);
 	}
 	public SwingActivity getActivity(){
@@ -80,6 +86,11 @@ public abstract class AbstractComponent {
 		view = null;
 		pt = null;
 		destroyed=true;
+
+		for(IDestroyListener listener:destroyListeners)
+		{
+			listener.onComponentDestroyed(this);
+		}
 	}
 	
 	public boolean destroyed(){
@@ -92,6 +103,8 @@ public abstract class AbstractComponent {
 	public boolean getMarkDestroy(){
 		return markedDestroy;
 	}
+	public void addDestroyListener(IDestroyListener listener){ destroyListeners.add(listener); }
+	public void removeDestroyListener(IDestroyListener listener){ destroyListeners.remove(listener); }
 	
 	/////////////////////// Get/Set Enabled ///////////////////////
 	
