@@ -1,5 +1,6 @@
 package com.pandeagames.www.gutterballredux.gameObjects;
 
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -39,7 +40,7 @@ public class Actor extends BodyComponent implements IRadialCollider{
 	        bodyDef.position.set(pos);
 	        radialCollider = new RadialCollider(game, this, 0.5f, RadialID.ACTOR);
 	        addCollisionGroup(CollisionGroups.ACTOR);
-	        sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.sphere);
+			sphere = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.sphere);
 	        r=0.5f;
 	        drawBody=false;
 	        tail = new Tail(game, this);

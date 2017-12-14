@@ -1,15 +1,14 @@
 package com.pandeagames.www.gutterballredux.gameObjects;
 
-import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v4.content.res.ResourcesCompat;
 
 import com.pandeagames.R;
 import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
 import com.pandeagames.www.gutterballredux.droidControllers.GutterBallApp;
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Button;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.IButtonPressListener;
@@ -72,7 +71,8 @@ public class EndLevelDialog extends DrawableGameComponent implements IButtonPres
         this.nextlevelButton.setRadius(0.5f);
 
         dest = new Rect();
-        panda = (BitmapDrawable) ResourcesCompat.getDrawable(game.getResources(), R.drawable.panda_green, null);
+
+        panda = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.panda_green);
     }
     public void onButtonPress(Button button) {
         buttonPressed = button;

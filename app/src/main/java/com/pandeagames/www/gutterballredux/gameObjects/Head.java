@@ -5,6 +5,8 @@ import com.pandeagames.R;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
@@ -38,7 +40,7 @@ public class Head extends DrawableGameComponent {
 		eyes = new JointNode(10, 50);
 		stiffAngle = new StiffAngleNode(centerBodyNode,tail.getMainAngleNode(), comp.getX(), comp.getY(), 0.2f,0);
 		restrainedNode = new RestrainedStiffAngleNode(stiffAngle, eyes,2,comp.getX(), comp.getY(), 0.5f);
-		headBitmap=(BitmapDrawable) game.getResources().getDrawable(R.drawable.head);
+		headBitmap = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.head);
 		des = new Rect();
 		//JointNode attached, JointNode attached2,
 		//float x, float y, float r

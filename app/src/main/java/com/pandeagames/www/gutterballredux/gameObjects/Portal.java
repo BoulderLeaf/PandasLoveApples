@@ -1,20 +1,17 @@
 package com.pandeagames.www.gutterballredux.gameObjects;
 
-import org.jbox2d.common.Vec2;
-
 import com.pandeagames.R;
 
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.RadialCollider;
 import com.pandeagames.www.gutterballredux.gameControllers.RadialID;
-import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
-import com.pandeagames.www.gutterballredux.droidControllers.SwingActivity;
-import com.pandeagames.www.gutterballredux.Components.DrawableComponent;
 import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
 import com.pandeagames.www.gutterballredux.Components.interfaces.IRadialCollider;
 
@@ -51,26 +48,26 @@ private IObtainedCallback obtainedCallback;
 			int ran = (int)(Math.random() * 5);
 			switch(ran){
 				case 0:
-					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.green_sphere);
+					sphere = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.green_sphere);
 					break;
 				case 1:
-					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_01);
+					sphere = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.apple_01);
 					break;
 				case 2:
-					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_03);
+					sphere = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.apple_03);
 					break;
 				case 3:
-					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_04);
+					sphere = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.apple_04);
 					break;
 				case 4:
-					sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.apple_05);
+					sphere = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.apple_05);
 					break;
 			}
 
 		}
 		else
 		{
-			sphere=(BitmapDrawable) game.getResources().getDrawable(R.drawable.golden_apple);
+			sphere = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.golden_apple);
 		}
 	}
 	@Override

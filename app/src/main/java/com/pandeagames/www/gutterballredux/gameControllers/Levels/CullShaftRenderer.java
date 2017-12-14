@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 
 import com.pandeagames.www.gutterballredux.Components.AbstractComponent;
 import com.pandeagames.www.gutterballredux.Components.interfaces.IDestroyListener;
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
 import com.pandeagames.www.gutterballredux.gameObjects.debry.FallGrassDebry;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
@@ -28,7 +29,7 @@ public class CullShaftRenderer extends DrawableGameComponent implements IBottomC
 	private List<FallGrassDebry> grassDebry;
 	public CullShaftRenderer(Game game) {
 		super(game);
-		lightShaft = (BitmapDrawable) game.getResources().getDrawable(R.drawable.light_pillar);
+		lightShaft = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.light_pillar);
 		cullList = new ArrayList<Culling>();
 		grassDebry = new ArrayList<FallGrassDebry>();
 	}

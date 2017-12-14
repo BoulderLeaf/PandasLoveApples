@@ -1,5 +1,6 @@
 package com.pandeagames.www.gutterballredux.gameObjects.launcher;
 
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 
@@ -35,8 +36,7 @@ public class FingerAnimation extends DrawableGameComponent implements ILauncherL
 		this.launcher=launcher;
 		launcher.addLauncherListener(this);
 		this.setPos(launcher.getX(), launcher.getY());
-		Log.i("INFO", "MAKE HAND");
-		hand  = (BitmapDrawable) game.getResources().getDrawable(R.drawable.icon_hand);
+		hand = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.icon_hand);
 		setState(2);
 	}
 	public int drawOrder(){

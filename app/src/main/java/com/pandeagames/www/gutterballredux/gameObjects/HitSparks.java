@@ -2,20 +2,17 @@ package com.pandeagames.www.gutterballredux.gameObjects;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.collision.Manifold;
-import org.jbox2d.collision.ManifoldPoint;
 import org.jbox2d.collision.WorldManifold;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.contacts.Contact;
-import org.jbox2d.dynamics.contacts.ContactEdge;
 
 import com.pandeagames.R;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
@@ -46,8 +43,7 @@ public class HitSparks extends DrawableGameComponent implements IContactCallback
 		paint=new Paint();
 		worldManifold=new WorldManifold();
 		paint.setARGB(255, 253, 252, 241);
-		 grass=(BitmapDrawable) game.getResources().getDrawable(R.drawable.grass);
-		 
+		grass = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.grass);
 		// TODO Auto-generated constructor stub
 	}
 	@Override

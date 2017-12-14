@@ -5,6 +5,8 @@ import com.pandeagames.R;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
@@ -32,8 +34,8 @@ public class Tail extends DrawableGameComponent {
 		nodes[2] = new StiffChainNode(nodes[1], comp.getX(),comp.getY(),1f);
 		paint = new Paint();
 		paint.setARGB(255, 255, 0, 0);
-		tail_end=(BitmapDrawable) game.getResources().getDrawable(R.drawable.tail_end);
-		tail_start=(BitmapDrawable) game.getResources().getDrawable(R.drawable.tail_start);
+		tail_end = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.tail_end);
+		tail_start = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.tail_start);
 		des = new Rect();
 	}
 	public JointNode getMainAngleNode(){

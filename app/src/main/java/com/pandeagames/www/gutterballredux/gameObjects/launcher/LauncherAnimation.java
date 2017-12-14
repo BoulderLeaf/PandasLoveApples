@@ -18,6 +18,8 @@ import com.pandeagames.R;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
@@ -76,22 +78,19 @@ public class LauncherAnimation extends DrawableGameComponent implements ILaunche
 		
 		VerletSpring2D s1 = new VerletSpring2D(str2.getTail(), str1.getTail(), 2, 1f);
 		physics.addSpring(s1);
-		
-		
+
 		paint = new Paint();
 		paint.setARGB(255, 199, 221, 71);
 		paint.setStrokeWidth(3);
-		
-		launcher_tree=(BitmapDrawable) game.getResources().getDrawable(R.drawable.tree_launcher);
-		basket=(BitmapDrawable) game.getResources().getDrawable(R.drawable.leaf_bag);
-		basket_full=(BitmapDrawable) game.getResources().getDrawable(R.drawable.leaf_bag_full);
+
+		launcher_tree = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.tree_launcher);
+		basket = BitmapPool. getBitmapDrawable(game.getResources(), R.drawable.leaf_bag);
+		basket_full = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.leaf_bag_full);
 		
 		this.launcher=launcher;
 		launcher.addLauncherListener(this);
 
 		des = new Rect();
-		
-		
 	}
 	
 	@Override

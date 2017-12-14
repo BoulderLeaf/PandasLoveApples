@@ -1,14 +1,12 @@
 package com.pandeagames.www.gutterballredux.gameObjects;
 
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v4.content.res.ResourcesCompat;
 
 import com.pandeagames.R;
 import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
-import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
 import com.pandeagames.www.gutterballredux.infoHolders.UpdateInfo;
 
@@ -31,8 +29,7 @@ public class StarExplosion extends DrawableGameComponent {
 
         stars = new ArrayList<StarObj>();
         dest = new Rect();
-        starArt = (BitmapDrawable) ResourcesCompat.getDrawable(game.getResources(), R.drawable.star, null);
-
+        starArt = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.star);
         StarObj star;
 
         this.setPos(x, y);

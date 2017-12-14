@@ -6,6 +6,7 @@ import java.util.List;
 import org.jbox2d.common.Vec2;
 
 import com.pandeagames.R;
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Levels.LevelDef;
 
 import android.animation.Animator;
@@ -29,10 +30,12 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 
 public class PhotoButton extends Button implements AnimatorListener {
-	private BitmapDrawable photo;
-	private BitmapDrawable disabledPhoto;
-	private BitmapDrawable disabledIcon;
-	private BitmapDrawable unlockedPhoto;
+	private int photo = -1;
+	private int disabledPhoto = -1;
+	private int disabledIcon = -1;
+	private int unlockedPhoto = -1;
+	private BitmapDrawable bitmapDisplayed;
+	private int resDisplayed = -1;
 	private int paddingBottom;
 	private int paddingTop;
 	private int paddingRight;
@@ -65,16 +68,46 @@ public class PhotoButton extends Button implements AnimatorListener {
 	public PhotoButton(Context context, int photoId, int photoDisabledId, int iconDisabledId, int unlockedIconId, float heightRatio) {
 		super(context);
 
-		setPhotoRes(photoId);
-		setUnlockedRes(unlockedIconId);
-		setDisabledPhotoRes(photoDisabledId);
-		setDisabledIcon(iconDisabledId);
+		photo = photoId;
+		unlockedPhoto = unlockedIconId;
+		disabledPhoto = photoDisabledId;
+		disabledIcon = iconDisabledId;
 
 		photoOnDisabled = true;
 		this.heightRatio = heightRatio;
 
 		constructPaint();
 	}
+
+	private BitmapDrawable getDrawableRes()
+	{
+		int resToDisplay = -1;
+
+		if(photo!=-1){
+			resToDisplay = photo;
+		}
+
+		if(!this.isEnabled() || markForUnlock){
+			if(disabledPhoto!=-1)
+			{
+				resToDisplay = disabledPhoto;
+			}
+			if(this.disabledIcon!=-1){
+				resToDisplay = disabledIcon;
+			}
+		}
+
+		if(resToDisplay == resDisplayed)
+		{
+			return bitmapDisplayed;
+		}
+
+		resDisplayed = resToDisplay;
+		bitmapDisplayed = BitmapPool.getBitmapDrawable(this.getResources(), resToDisplay);
+
+		return bitmapDisplayed;
+	}
+
 	private void constructPaint(){
 		textPaint = new Paint();
 		textPaint.setTextSize(30);
@@ -112,41 +145,43 @@ public class PhotoButton extends Button implements AnimatorListener {
 		paddingRight=0;
 		paddingLeft=0;
 
-		if(photo!=null){
+		BitmapDrawable toDraw = getDrawableRes();
+
+		if(photo!=-1){
 			if(!this.isEnabled() && !photoOnDisabled){
 			}else{
 				des.set(paddingLeft,paddingTop,getWidth()-paddingRight,getHeight()-paddingBottom);
-				photo.setBounds(des);
-				photo.draw(c);
+				toDraw.setBounds(des);
+				toDraw.draw(c);
 			}
 		}
 		Rect coverDes = new Rect();
 		coverDes.set(des);
 		if(!this.isEnabled() || markForUnlock){
-			if(disabledPhoto!=null){
+			if(disabledPhoto!=-1){
 				des.set(paddingLeft,paddingTop,getWidth()-paddingRight,getHeight()-paddingBottom);
-				disabledPhoto.setBounds(des);
-				disabledPhoto.draw(c);
+				toDraw.setBounds(des);
+				toDraw.draw(c);
 			}
-			if(this.disabledIcon!=null){
+			if(this.disabledIcon!=-1){
 				float scale=1f;
 				int left, right, top, bottom;
 				
-				if(getWidth()<disabledIcon.getIntrinsicWidth()){
-					scale=(float)getWidth()/(float)disabledIcon.getIntrinsicWidth();
+				if(getWidth()<toDraw.getIntrinsicWidth()){
+					scale=(float)getWidth()/(float)toDraw.getIntrinsicWidth();
 				}
-				if(getHeight()<disabledIcon.getIntrinsicHeight()){
-					if(scale>(float)getHeight()/(float)disabledIcon.getIntrinsicHeight()){
-						scale=(float)getHeight()/(float)disabledIcon.getIntrinsicHeight();
+				if(getHeight()<toDraw.getIntrinsicHeight()){
+					if(scale>(float)getHeight()/(float)toDraw.getIntrinsicHeight()){
+						scale=(float)getHeight()/(float)toDraw.getIntrinsicHeight();
 					}
 				}
-				left=(int)(getWidth()/2-(disabledIcon.getIntrinsicWidth()*scale)/2);
-				right=(int)(getWidth()/2+(disabledIcon.getIntrinsicWidth()*scale)/2);
-				top=(int)(getHeight()/2-(disabledIcon.getIntrinsicHeight()*scale)/2);
-				bottom=(int)(getHeight()/2+(disabledIcon.getIntrinsicHeight()*scale)/2);
+				left=(int)(getWidth()/2-(toDraw.getIntrinsicWidth()*scale)/2);
+				right=(int)(getWidth()/2+(toDraw.getIntrinsicWidth()*scale)/2);
+				top=(int)(getHeight()/2-(toDraw.getIntrinsicHeight()*scale)/2);
+				bottom=(int)(getHeight()/2+(toDraw.getIntrinsicHeight()*scale)/2);
 				des.set(left,top,right,bottom);
-				disabledIcon.setBounds(des);
-				disabledIcon.draw(c);
+				toDraw.setBounds(des);
+				toDraw.draw(c);
 
 				c.drawText(this.getText().toString(), des.centerX()-this.getText().length()*7, des.bottom+40, textPaint);
 			}
@@ -172,7 +207,7 @@ public class PhotoButton extends Button implements AnimatorListener {
 	}
 	public void setDisabledPhotoRes(int res){
 		if(res==-1)return;
-		setDisabledPhotoRes(this.getContext().getResources().getDrawable(res));
+		disabledPhoto=res;
 	}
 	public void setMarkForUnlock(boolean value){
 		markForUnlock=value;
@@ -210,61 +245,31 @@ public class PhotoButton extends Button implements AnimatorListener {
 	public int getDummyValue(){
 		return dummyValue;
 	}
-	public void setDisabledPhotoRes(Drawable drawable){
-		if(drawable==null)return;
-		setDisabledPhotoRes((BitmapDrawable) drawable);
-	}
-	public void setDisabledPhotoRes(BitmapDrawable bitmap){
-		if(bitmap==null)return;
-		disabledPhoto=bitmap;
-		this.invalidate();
-	}
-	public BitmapDrawable getDisabledPhoto(){
+	public int getDisabledPhoto(){
 		return disabledPhoto;
 	}
 	public void setPhotoRes(int res){
 		if(res==-1)return;
-		setPhotoRes(this.getContext().getResources().getDrawable(res));
+		photo = res;
 	}
 	public void setPhotoRes(Drawable drawable){
 		if(drawable==null)return;
 		setPhotoRes((BitmapDrawable) drawable);
 	}
-	public void setPhotoRes(BitmapDrawable bitmap){
-		if(bitmap==null)return;
-		photo=bitmap;
-		this.invalidate();
-	}
-	public BitmapDrawable getPhoto(){
+
+	public int getPhoto(){
 		return photo;
 	}
 	public void setUnlockedRes(int res){
 		if(res==-1)return;
-		setUnlockedRes(this.getContext().getResources().getDrawable(res));
+		unlockedPhoto = res;
 	}
-	public void setUnlockedRes(Drawable drawable){
-		if(drawable==null)return;
-		setUnlockedRes((BitmapDrawable) drawable);
-	}
-	public void setUnlockedRes(BitmapDrawable bitmap){
-		if(bitmap==null)return;
-		unlockedPhoto=bitmap;
-		this.invalidate();
-	}
-	public BitmapDrawable getUnlockedPhoto(){
+	public int getUnlockedPhoto(){
 		return unlockedPhoto;
 	}
+
 	public void setDisabledIcon(int res){
-		if(res==-1)return;
-		setDisabledIcon(this.getContext().getResources().getDrawable(res));
-	}
-	public void setDisabledIcon(Drawable drawable){
-		if(drawable==null)return;
-		setDisabledIcon((BitmapDrawable) drawable);
-	}
-	public void setDisabledIcon(BitmapDrawable bitmap){
-		if(bitmap==null)return;
-		disabledIcon=bitmap;
+		disabledIcon=res;
 		this.invalidate();
 	}
 

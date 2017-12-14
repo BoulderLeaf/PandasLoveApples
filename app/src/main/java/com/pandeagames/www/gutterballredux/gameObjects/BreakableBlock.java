@@ -25,7 +25,6 @@ public class BreakableBlock extends Breakable {
     protected double maxCollideVelocity = 20;
     protected float shake;
     protected float friction = 0.9f;
-    protected BitmapDrawable artMain;
     protected Bitmap artMainBitmap;
     protected float r = 2;
     protected float radiusMod = 0.2f;
@@ -68,14 +67,6 @@ public class BreakableBlock extends Breakable {
         super.draw(info);
         float x=getX() + drawOffset.x;
         float y=getY() + drawOffset.y;
-       /* Rect des = new Rect();
-
-        des.set((int)gameView.toScreenX(x-(r +radiusMod)),
-                (int)gameView.toScreenY(y-(r +radiusMod)),
-                (int)gameView.toScreenX(x+ (r +radiusMod)),
-                (int)gameView.toScreenY(y+ (r + radiusMod)));
-        artMain.setBounds(des);
-        artMain.draw(info.getCanvas());*/
 
         Rect des = new Rect();
         des.set((int)gameView.toScreenX(x-(r +radiusMod)),

@@ -1,5 +1,6 @@
 package com.pandeagames.www.gutterballredux.gameObjects;
 
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameControllers.Simulation;
 import com.pandeagames.www.gutterballredux.infoHolders.DrawInfo;
@@ -53,8 +54,7 @@ public class Background extends DrawableGameComponent {
 	options.inSampleSize = 1;
 	options.mCancel = false;
 	options.inPreferredConfig = Config.RGB_565;
-	bitmap = BitmapFactory.decodeResource(game.getResources(), id, options);
-	
+	bitmap = BitmapPool.getBitmap(game.getResources(), id, options);
 	options.mCancel = false;
 	
 	}

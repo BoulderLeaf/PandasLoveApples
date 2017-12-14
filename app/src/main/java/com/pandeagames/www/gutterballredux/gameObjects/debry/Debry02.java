@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
 import com.pandeagames.R;
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameObjects.GenericBody;
 
@@ -22,7 +23,7 @@ public class Debry02 extends AbstractDebry {
         drawRect = new Rect();
         count = 7;
         verticies =  new Vec2[count];
-        asset = (BitmapDrawable)game.getResources().getDrawable(R.drawable.debry_02);
+        asset = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.debry_02);
 
         verticies[0] = new Vec2(0.52f, 1.9f);
         verticies[1] = new Vec2(0.02f, 1.1f);

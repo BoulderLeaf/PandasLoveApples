@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 
 import com.pandeagames.R;
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameObjects.BreakableBlock;
 import com.pandeagames.www.gutterballredux.gameObjects.CollisionGroups;
@@ -41,9 +42,7 @@ public class BreakableBushLarge extends BreakableBlock {
         options.inSampleSize = 1;
         options.mCancel = false;
         options.inPreferredConfig = Bitmap.Config.RGB_565;
-        artMainBitmap = BitmapFactory.decodeResource(game.getResources(), R.drawable.breakable_blocks_full, options);
-
-        artMain =(BitmapDrawable) game.getResources().getDrawable(R.drawable.breakable_blocks_full);
+        artMainBitmap = BitmapPool.getBitmap(game.getResources(), R.drawable.breakable_blocks_full, options);
         r = 4f;
 
         friction = 0.5f;

@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 
 import com.pandeagames.R;
 import com.pandeagames.www.gutterballredux.Components.DrawableGameComponent;
+import com.pandeagames.www.gutterballredux.gameControllers.BitmapPool;
 import com.pandeagames.www.gutterballredux.gameControllers.Game;
 import com.pandeagames.www.gutterballredux.gameObjects.GenericBody;
 import com.pandeagames.www.gutterballredux.gameObjects.debry.Debry01;
@@ -50,7 +51,7 @@ public class GrassBlockDebry extends DrawableGameComponent {
             rotations[i] = (float) Math.random() * 360;
         }
 
-        grass=(BitmapDrawable) game.getResources().getDrawable(R.drawable.grass);
+        grass= BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.grass);
     }
     public  GrassBlockDebry(Game game, float x, float y) {
         this(game, x, y ,new Vec2(0, 0));
