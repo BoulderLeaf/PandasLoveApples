@@ -86,7 +86,6 @@ public class LauncherAnimation extends DrawableGameComponent implements ILaunche
 		launcher_tree = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.tree_launcher);
 		basket = BitmapPool. getBitmapDrawable(game.getResources(), R.drawable.leaf_bag);
 		basket_full = BitmapPool.getBitmapDrawable(game.getResources(), R.drawable.leaf_bag_full);
-		
 		this.launcher=launcher;
 		launcher.addLauncherListener(this);
 
